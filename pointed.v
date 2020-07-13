@@ -44,7 +44,7 @@ Proof.
   - exact (λ X Y f, idpath _).
   - exact (λ W X Y Z f g h, idpath _).
   - exact (λ W X Y Z f g h, idpath _).
-Defined.
+Qed.
 
 Definition TYPE : precategory.
 Proof.
@@ -120,7 +120,7 @@ Proof.
     apply maponpaths_2.
     refine (!_).
     exact (maponpathscomp g h p).
-Defined.
+Qed.
 
 Definition disp_point
   : disp_precat type_precat.
@@ -139,10 +139,10 @@ Proof.
   use tpair.
   - use make_disp_cat_ob_mor.
     + exact (λ X, X → X).
-    + exact (λ X Y hX hY f, ∏ (x : X), f(hX x) = hY(f x)).
+    + exact (λ X Y hX hY f, ∏ (x : X), hY(f x) = f(hX x)).
   - split.
     + exact (λ X f x, idpath _).
-    + exact (λ X Y Z f g hX hY hZ p q x, maponpaths g (p x) @ q _).
+    + exact (λ X Y Z f g hX hY hZ p q x, q (f x) @ maponpaths g (p x)).
 Defined.
 
 Definition disp_end_axioms
@@ -151,21 +151,23 @@ Proof.
   simple refine (_ ,, _ ,, _).
   - cbn ; unfold idfun.
     intros X Y f hX hY p.
-    apply idpath.
+    use funextsec ; intro x.
+    exact (pathscomp0rid (p x) @ idpath (p x)).
   - cbn ; unfold idfun.
     intros X Y f hX hY p.
     use funextsec ; intro x.
-    exact (pathscomp0rid _ @ maponpathsidfun _).
-  - cbn ; unfold idfun.
+    exact (maponpathsidfun (p x)).
+  - cbn.
     intros W X Y Z f g h hW hX hY hZ p q r.
     use funextsec ; intro x.
-    refine (path_assoc _ _ _ @ _).
-    apply maponpaths_2.
-    refine (_ @ !(maponpathscomp0 h _ _)).
-    apply maponpaths_2.
-    refine (!_).
-    exact (maponpathscomp g h _).
-Defined.
+    refine (!_ @ !_ @ !_).
+    + apply path_assoc.
+    + apply maponpaths.
+      apply maponpaths.
+      exact ( maponpathscomp g h (p x)).
+    + apply maponpaths.
+      exact (maponpathscomp0 h (q (f x)) (maponpaths g (p x))).
+Qed.
 
 Definition disp_end
   : disp_precat type_precat.
@@ -287,7 +289,7 @@ Proof.
   - intros. apply dirprod_paths; use (assoc_disp @ !_).
     + use pr1_transportf.
     + apply pr2_transportf.
-Defined.
+Qed.
 
 
 Definition dirprod_disp_precat {C : precategory} (D1 D2 : disp_precat C) : disp_precat C.
@@ -296,6 +298,8 @@ Proof.
   - exact (dirprod_disp_cat_data (pr1 D1) (pr1 D2)).
   - exact (dirprod_disp_precat_axioms D1 D2).
 Defined.
+
+Print dirprod_disp_precat.
 
 (**
 We can create the displayed precategory which adds a point and an endomorphism as the product of `disp_end` and `disp_type`.
@@ -319,7 +323,27 @@ Defined.
 
 Definition TYPE3 : precategory := total_precategory disp3.
 
-(** WIP
+(** Accessor functions for TYPE3 **)
+
+
+Definition type3 (X3 : TYPE3) : UU := pr1 X3.
+Definition point {X3 : TYPE3} : type3 X3 := pr112 X3.
+Definition s {X3 : TYPE3} : type3 X3 → type3 X3 := pr212 X3.
+Definition p₁ {X3 : TYPE3} : type3 X3 → type3 X3 := pr122 X3.
+Definition p₂ {X3 : TYPE3} : type3 X3 → type3 X3 := pr222 X3.
+
+
+Definition f {X3 Y3 : TYPE3} {f3 : TYPE3 ⟦ X3, Y3 ⟧} : type3 X3 → type3 Y3 := pr1 f3.
+Definition ff {X3 Y3 : TYPE3} {f3 : TYPE3 ⟦ X3, Y3 ⟧} : f point = point := pr112 f3.
+Definition p {X3 Y3 : TYPE3} {f3 : TYPE3 ⟦ X3, Y3 ⟧} :
+  ∏ z : type3 X3, s (f  z) = f (s z) :=  pr212 f3.
+Definition α {X3 Y3 : TYPE3} {f3 : TYPE3 ⟦ X3, Y3 ⟧} :
+  ∏ z : type3 X3, p₁ (f z) = f (p₁ z) :=  pr122 f3.
+Definition β {X3 Y3 : TYPE3} {f3 : TYPE3 ⟦ X3, Y3 ⟧} :
+  ∏ z : type3 X3, p₂ (f z) = f (p₂ z) :=  pr222 f3.
+
+
+(**
 Then, we add the first coherency, by defining:
 1) For each object (X, x, s, p₁, p₂) : TYPE3, the type
 
@@ -331,88 +355,83 @@ Then, we add the first coherency, by defining:
 
 Conform Definition 10 of 'The Integers as Higher Inductive Type'.
  *)
-Definition disp_sec_data : disp_cat_data TYPE3.
+Definition disp_sec_ob_mor : disp_cat_ob_mor TYPE3.
 Proof.
-  use tpair.
-  - use make_disp_cat_ob_mor.
-    + cbn.
-      intro XX.
-      exact (∏ z : (pr1 XX), pr122 XX (pr212 XX z) = z).  (*  (p1(s(z)) = z) *)
-    + cbn. intros XX YY ε η ff.
-      apply (∏ z : (pr1 XX), η (pr1 ff z) = (maponpaths (pr122 YY) (!(pr212 ff z))) @ (!(pr122 ff (pr212 XX z))) @ (maponpaths (pr1 ff) (ε z))).
-  - split.
-    + cbn.
-      intros XX ε z.
-      unfold idfun.
-      refine (!_).
-      apply maponpathsidfun.
-    + cbn. intros XX YY ZZ ff gg ε η θ fff ggg z.
-      refine (_ @ _ @ _ @ _ @ !(!_ @ _ @ _ @ _)).
-      * apply ggg.
-      * apply maponpaths.
-        apply maponpaths.
-        apply maponpaths.
-        exact (fff z).
-      * apply maponpaths.
-        apply maponpaths.
-        apply maponpathscomp0.
-      * apply maponpaths.
-        apply maponpaths.
-        apply maponpaths.
-        apply maponpathscomp0.
-      * apply maponpaths.
-        apply maponpaths.
-        (*apply maponpathscomp.*)
-        Abort.
+  use make_disp_cat_ob_mor.
+  - cbn.
+    intro X3.
+    exact (∏ z : type3 X3, p₁ (s z) = z).
+  - intros X3 Y3 ε η fff. cbn in ε, η.
+    exact (∏ z : type3 X3, η (@f _ _ fff z) = maponpaths p₁ (p z) @ α (s z) @ maponpaths f (ε z)).
+Defined.
 
+Definition disp_sec_id_comp : disp_cat_id_comp TYPE3 disp_sec_ob_mor.
+Proof.
+  split.
+  - cbn.
+    intros X3 ε z.
+    unfold idfun.
+    refine (!_).
+    apply maponpathsidfun.
+  - cbn.
+    intros X3 Y3 Z3 ff gg ε η θ fff ggg z.
+    refine (_ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _).
+    + apply (ggg _).
+    + apply maponpaths.
+      apply maponpaths.
+      apply maponpaths.
+      apply (fff z).
+    + apply maponpaths.
+      apply maponpaths.
+      apply maponpathscomp0.
+    + apply maponpaths.
+      apply path_assoc.
+    + apply maponpaths.
+      apply maponpaths_2.
+      apply maponpaths.
+      apply maponpathscomp.
+    + apply maponpaths.
+      apply maponpaths_2.
+      apply (! homotsec_natural (pr122 gg) _).
+    + apply maponpaths.
+      apply maponpaths_2.
+      apply maponpaths_2.
+      apply (! maponpathscomp _ _ _).
+    + apply maponpaths.
+      apply (! path_assoc _ _ _).
+    + apply maponpaths.
+      apply maponpaths.
+      apply maponpaths.
+      apply maponpathscomp0.
+    + apply path_assoc.
+    + apply maponpaths_2.
+      apply (! maponpathscomp0 _ _ _).
+    + apply maponpaths.
+      apply path_assoc.
+    + apply maponpaths.
+      apply maponpaths.
+      apply maponpathscomp.
+Defined.
+
+Definition disp_sec_data : disp_cat_data TYPE3
+  := disp_sec_ob_mor ,, disp_sec_id_comp.
+
+Definition disp_sec_axioms: disp_precat_axioms disp_sec_data.
+Proof.
+  simple refine (_ ,, _ ,, _).
+  - cbn.
+    intros X3 Y3 ff ε η ps.
+    unfold idfun.
+    use funextsec.
+    intro z.
+Abort.
 
 (** ℤh **)
 (**
 Precategory with an added point and two endomorphisms
   *)
-Definition disp2 : disp_precat type_precat.
-Proof.
-  apply dirprod_disp_precat.
-  - exact disp_point_end.
-  - exact disp_end.
-Defined.
+Definition disp2 : disp_precat type_precat := dirprod_disp_precat disp_point_end disp_end.
+
+Print disp2.
 
 Definition TYPE2 : precategory := total_precategory disp2.
-
-(** WIP
-Adding the first coherency
- *)
-Definition disp_sec_h_data : disp_cat_data TYPE2.
-Proof.
-  use tpair.
-  - use make_disp_cat_ob_mor.
-    + cbn.
-      intro XX.
-      exact (∏ z : (pr1 XX), pr22 XX (pr212 XX z) = z).
-    + cbn.
-      intros XX YY ε η ff.
-      exact (∏ z : (pr1 XX), η (pr1 ff z) = ((maponpaths (pr22 YY) (!(pr212 ff z))) @ (!(pr22 ff (pr212 XX z))) @ (maponpaths (pr1 ff) (ε z)))).
-  - split.
-    + cbn. intros XX ε z.
-      unfold idfun.
-      refine (!_).
-      exact (maponpathsidfun (ε z)).
-    + cbn. intros XX YY ZZ ff gg ε η θ fff ggg z.
-      refine (_ @ _ @ _ @ _ @ !(!_ @ _ @ _ @ _)).
-      * apply ggg.
-      * apply maponpaths.
-        apply maponpaths.
-        apply maponpaths.
-        exact (fff z).
-      * apply maponpaths.
-        apply maponpaths.
-        apply maponpathscomp0.
-      * apply maponpaths.
-        apply maponpaths.
-        apply maponpaths.
-        apply maponpathscomp0.
-      * apply maponpaths.
-        apply maponpaths.
-        (* apply maponpathscomp. *)
-
-        Abort.
