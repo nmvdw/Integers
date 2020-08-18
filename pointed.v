@@ -5,6 +5,9 @@ Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.categories.Type.Core.
 Require Import UniMath.CategoryTheory.DisplayedCats.Core.
 Require Import UniMath.CategoryTheory.DisplayedCats.Constructions.
+Require Import UniMath.CategoryTheory.Core.Functors.
+Require Import UniMath.CategoryTheory.Core.NaturalTransformations.
+
 
 
 (**
@@ -269,6 +272,84 @@ Example: The precategories `TYPE_point` and `TYPE_end` are the total precategori
 Definition TYPE_point : precategory := total_precategory disp_point.
 
 Definition TYPE_end : precategory := total_precategory disp_end.
+
+(** First projection of total precategory **)
+(* Copied from 'DisplayedCats/Core.v' so that they work with our definition of `disp_precat`*)
+Definition pr1_precat_data {C : precategory} (D : disp_precat C) :
+  functor_data (total_precategory D) C.
+Proof.
+  exists pr1.
+  intros a b.
+  exact pr1.
+Defined.
+
+Lemma pr1_precat_is_functor {C : precategory} (D : disp_precat C) :
+  is_functor (pr1_precat_data D).
+Proof.
+  apply tpair.
+  - intro x.
+    apply idpath.
+  - intros x y z f g.
+    apply idpath.
+Qed.
+
+Definition pr1_precat {C : precategory} (D : disp_precat C) : functor (total_precategory D) C :=
+  make_functor (pr1_precat_data D) (pr1_precat_is_functor D).
+
+
+
+(** Adding endpoints using a precategory C **)
+Definition add_path_endpoints_ob_mor {C : precategory} {D : disp_precat C} {S : functor C C} (l r : nat_trans (functor_composite (pr1_precat D) S) (pr1_precat D)) : disp_cat_ob_mor (total_precategory D).
+Proof.
+  use make_disp_cat_ob_mor.
+  - intro Aa.
+    exact (l Aa = r Aa).
+  - intros Aa Bb α β f.
+    exact (maponpaths (λ x, x · _) α @ !nat_trans_ax r Aa Bb f = !nat_trans_ax l Aa Bb f @ maponpaths (λ x, _ · x) β).
+    (* alternative:
+    exact (cancel_postcomposition (l Aa) (r Aa) (functor_on_morphisms (pr1_precat D) f) α @ !nat_trans_ax r Aa Bb f = !nat_trans_ax l Aa Bb f @ cancel_precomposition _ _ _ _ (l Bb) (r Bb) (functor_on_morphisms (functor_composite (pr1_precat D) S) f) β). *)
+Defined.
+
+(* Attempt at adding identity and composition to this *)
+Definition add_path_endpoints_id_comp {C : precategory} {D : disp_precat C} {S : functor C C} (l r : nat_trans (functor_composite (pr1_precat D) S) (pr1_precat D)) : disp_cat_id_comp (total_precategory D) (add_path_endpoints_ob_mor l r).
+Proof.
+  split.
+    + intro Aa. simpl. intros α.
+      pose (λ x : C ⟦ S (pr1 Aa), pr1 Aa ⟧, x · identity (pr1 Aa)) as f.
+      pose (λ x : C ⟦ S (pr1 Aa), pr1 Aa ⟧, (# S)%Cat (identity (pr1 Aa)) · x) as g.
+      assert (H : homotsec f g).
+      {
+        unfold homotsec.
+        intro x.
+        unfold f.
+        unfold g.
+        refine (_ @ !(_ @ _)).
+        - apply id_right.
+        - apply (maponpaths (λ y, y · x) (functor_id S (pr1 Aa))).
+        - apply id_left.
+      }
+
+      Check (@homotsec_natural _ _ (λ x : C ⟦ S (pr1 Aa), pr1 Aa ⟧, x · identity (pr1 Aa)) (λ x : C ⟦ S (pr1 Aa), pr1 Aa ⟧, (# S)%Cat (identity (pr1 Aa)) · x) H).
+      Check (homotsec_natural H α).
+      unfold f in H.
+      unfold g in H.
+      Check (H (l Aa)).
+      Check (identity (pr1 Aa)).
+      Check (nat_trans_ax l Aa Aa (identity (Aa))).
+Abort.
+
+(** Adding endpoints using type_precat as base precategory **)
+Definition add_paths_endpoints_type_precat_ob_mor {D : disp_precat type_precat} {S : functor type_precat type_precat} (l r : nat_trans (functor_composite (pr1_precat D) S) (pr1_precat D)) : disp_cat_ob_mor (total_precategory D).
+Proof.
+  use make_disp_cat_ob_mor.
+  - intro Aa.
+    exact (∏ x, l Aa x = r Aa x).
+  - intros Aa Bb α β f.
+    exact (∏ x, eqtohomot (!nat_trans_ax l Aa Bb f) x @ β (functor_on_morphisms (functor_composite (pr1_precat D) S) f x) = maponpaths (functor_on_morphisms (pr1_precat D) f) (α x) @ eqtohomot (!nat_trans_ax r Aa Bb f) x).
+Defined.
+
+
+
 
 (**
 Direct products of displayed precategories.
