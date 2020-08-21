@@ -1,0 +1,19 @@
+COQC = coqc
+COQDEP = coqdep
+
+-R . "Integers"
+-R "GrpdHITs/code" "sem"
+
+-arg "-type-in-type"
+
+disp_precat.v
+total_precat.v
+
+point_constructors.v
+
+Zb_paths.v
+Zh_paths.v
+
+path_constructors.v
+
+Zb_Zh_sig.v

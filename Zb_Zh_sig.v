@@ -6,15 +6,15 @@ Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.Bicategories.Core.Bicat.
 Require Import UniMath.Bicategories.Core.Examples.OneTypes.*)
 
-Require Import prelude.all.
-Require Import signature.hit_signature.
-Require Import signature.hit.
+Require Import sem.prelude.all.
+Require Import sem.signature.hit_signature.
+Require Import sem.signature.hit.
 
-(*Require Import algebra.one_types_polynomials.
-Require Import algebra.one_types_endpoints.
-Require Import algebra.one_types_homotopies.
-Require Import displayed_algebras.displayed_algebra.
-Require Import displayed_algebras.globe_over_lem.
+(*Require Import sem.algebra.one_types_polynomials.
+Require Import sem.algebra.one_types_endpoints.
+Require Import sem.algebra.one_types_homotopies.
+Require Import sem.displayed_algebras.displayed_algebra.
+Require Import sem.displayed_algebras.globe_over_lem.
  *)
 
 Definition Zb_point_constr : poly_code
