@@ -8,12 +8,17 @@ COQDEP = coqdep
 
 Categories/disp_precat.v
 Categories/total_precat.v
-
 Categories/point_constructors.v
-
 Categories/Zb_paths.v
 Categories/Zh_paths.v
-
 Categories/path_constructors.v
+
+Bicategories/TypePrebicat.v
+Bicategories/EndOneTypes.v
+Bicategories/DispPrebicat.v
+Bicategories/PointTypes.v
+Bicategories/PointTypesHomot.v
+Bicategories/EndTypes.v
+Bicategories/EndTypesHomot.v
 
 Zb_Zh_sig.v
