@@ -5,9 +5,9 @@ Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.categories.Type.Core.
 Require Import UniMath.CategoryTheory.DisplayedCats.Core.
 
-Require Import Integers.disp_precat.
-Require Import Integers.total_precat.
-Require Import Integers.point_constructors.
+Require Import Integers.Categories.disp_precat.
+Require Import Integers.Categories.total_precat.
+Require Import Integers.Categories.point_constructors.
 
 Local Open Scope cat.
 

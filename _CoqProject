@@ -6,14 +6,14 @@ COQDEP = coqdep
 
 -arg "-type-in-type"
 
-disp_precat.v
-total_precat.v
+Categories/disp_precat.v
+Categories/total_precat.v
 
-point_constructors.v
+Categories/point_constructors.v
 
-Zb_paths.v
-Zh_paths.v
+Categories/Zb_paths.v
+Categories/Zh_paths.v
 
-path_constructors.v
+Categories/path_constructors.v
 
 Zb_Zh_sig.v

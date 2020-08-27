@@ -8,9 +8,9 @@ Require Import UniMath.CategoryTheory.DisplayedCats.Constructions.
 Require Import UniMath.CategoryTheory.Core.Functors.
 Require Import UniMath.CategoryTheory.Core.NaturalTransformations.
 
-Require Import Integers.disp_precat.
-Require Import Integers.total_precat.
-Require Import Integers.point_constructors.
+Require Import Integers.Categories.disp_precat.
+Require Import Integers.Categories.total_precat.
+Require Import Integers.Categories.point_constructors.
 
 Local Open Scope cat.
 Local Open Scope mor_disp.

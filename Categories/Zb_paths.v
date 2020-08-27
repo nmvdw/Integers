@@ -5,9 +5,9 @@ Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.categories.Type.Core.
 Require Import UniMath.CategoryTheory.DisplayedCats.Core.
 
-Require Import Integers.disp_precat.
-Require Import Integers.total_precat.
-Require Import Integers.point_constructors.
+Require Import Integers.Categories.disp_precat.
+Require Import Integers.Categories.total_precat.
+Require Import Integers.Categories.point_constructors.
 
 Local Open Scope cat.
 Local Open Scope mor_disp.
@@ -129,14 +129,8 @@ Proof.
 Defined.
 
 
-
-Check disp_sec_id_comp.
-
 Definition disp_sec_data : disp_cat_data TYPE3
   := disp_sec_ob_mor ,, disp_sec_id_comp.
-
-Print disp_sec_id_comp.
-
 
 Definition disp_sec_axioms
   : disp_precat_axioms disp_sec_data.

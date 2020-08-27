@@ -5,7 +5,7 @@ Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.DisplayedCats.Core.
 Require Import UniMath.CategoryTheory.Core.Functors. 
 
-Require Import Integers.disp_precat.
+Require Import Integers.Categories.disp_precat.
 
 Local Open Scope cat.
 
