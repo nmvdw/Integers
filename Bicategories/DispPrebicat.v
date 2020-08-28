@@ -664,3 +664,15 @@ Arguments disp_prebicat_data _ : clear implicits.
 Arguments disp_prebicat _ : clear implicits.
 Arguments disp_bicat _ : clear implicits.
 
+
+Module Notations.
+
+Export Bicat.Notations.
+
+Notation "f' ==>[ x ] g'" := (disp_2cells x f' g') (at level 60).
+Notation "f' <==[ x ] g'" := (disp_2cells x g' f') (at level 60, only parsing).
+Notation "rr •• ss" := (disp_vcomp2 rr ss) (at level 60).
+Notation "ff ◃◃ rr" := (disp_lwhisker ff rr) (at level 60).
+Notation "rr ▹▹ gg" := (disp_rwhisker gg rr) (at level 60).
+
+End Notations.

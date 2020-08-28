@@ -20,5 +20,12 @@ Bicategories/PointTypes.v
 Bicategories/PointTypesHomot.v
 Bicategories/EndTypes.v
 Bicategories/EndTypesHomot.v
+Bicategories/DispProd.v
+Bicategories/ZbPaths.v
+
+Bicategories/Prebicat.v
+Bicategories/Invertible_2cells.v
+Bicategories/Unitors.v
+Bicategories/BicategoryLaws.v
 
 Zb_Zh_sig.v
