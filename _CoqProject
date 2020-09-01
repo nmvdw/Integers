@@ -23,6 +23,7 @@ Bicategories/EndTypesHomot.v
 Bicategories/DispProd.v
 Bicategories/ZbPaths.v
 Bicategories/PseudoFunctor.v
+Bicategories/PseudoTransformation.v
 
 Bicategories/Prebicat.v
 Bicategories/Invertible_2cells.v

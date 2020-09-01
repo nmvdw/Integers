@@ -442,10 +442,6 @@ Section PseudoFunctorLocalFunctor.
   Context {C D : prebicat}.
   Variable (F : pseudofunctor C D) (X Y : C).
 
-
-
-  
-  Check hom.
     Definition Fmor_data
     : functor_data (hom X Y) (hom (F X) (F Y)).
   Proof.
