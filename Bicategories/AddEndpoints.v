@@ -54,7 +54,7 @@ Qed.
 
   
 (* the objects over (A, a) are 2-cells. They could also be equalities *)
-Section PathConstructor.
+Section AddEndpoints.
   Context {C : prebicat}.
   Variable (D : disp_prebicat C).
 
@@ -203,4 +203,4 @@ Section PathConstructor.
   Defined.
 
   Definition add_path_endpoints : prebicat := total_prebicat add_path_endpoints_prebicat.
-End PathConstructor.
+End AddEndpoints.

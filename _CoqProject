@@ -33,6 +33,6 @@ Bicategories/PseudoFunctor.v
 Bicategories/PseudoTransformation.v
 Bicategories/Composition.v
 Bicategories/Projection.v
-Bicategories/PathConstructor.v
+Bicategories/AddEndpoints.v
 
 Zb_Zh_sig.v
