@@ -1,3 +1,4 @@
 [submodule "GrpdHITs"]
 	path = GrpdHITs
 	url = git@github.com:nmvdw/GrpdHITs.git
+	branch = extended
