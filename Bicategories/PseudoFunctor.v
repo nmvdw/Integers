@@ -470,7 +470,8 @@ Section PseudoFunctorLocalFunctor.
 End PseudoFunctorLocalFunctor.
 
 Module Notations.
-  Notation "'##'" := (pseudofunctor_on_cells).
+  Notation "'#'" := (F₁).
+  Notation "'##'" := (F₂).
 End Notations.
 
 (* Use styles of UM/Bi/PF/PseudoFunctor.v, Integers/Bi/DispPrebicat.v and UM/Core/Functors.v *)

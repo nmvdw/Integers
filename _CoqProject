@@ -35,4 +35,6 @@ Bicategories/Composition.v
 Bicategories/Projection.v
 Bicategories/AddEndpoints.v
 
+Bicategories/Algebra.v
+
 Zb_Zh_sig.v
