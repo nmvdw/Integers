@@ -38,4 +38,7 @@ Bicategories/AddEndpoints.v
 Bicategories/Algebra.v
 Bicategories/DispDepProd.v
 
+Bicategories/TypesUnitBicat.v
+Bicategories/TypeChaotic.v
+
 Zb_Zh_sig.v
