@@ -35,8 +35,8 @@ Require Import sem.signature.hit_signature.
 
 
 Require Import Integers.TypeBicatUnit.TypeChaotic.
-Require Import Integers.TypeBicatUnit.types_unit_polynomials.
-Require Import Integers.TypeBicatUnit.types_unit_endpoints.
+Require Import Integers.TypeBicatUnit.old_types_unit_polynomials.
+Require Import Integers.TypeBicatUnit.old_types_unit_endpoints.
 
 Local Open Scope cat.
 (*Local Open Scope bicategory_scope.

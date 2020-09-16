@@ -5,6 +5,7 @@
 tex/*.pdf
 *~
 \#*\#
+.\#*
 Makefile
 Makefile.conf
 

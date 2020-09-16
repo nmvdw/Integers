@@ -41,6 +41,9 @@ Prebicategories/DispDepProd.v
 Prebicategories/TypesUnitBicat.v
 
 TypeBicatUnit/TypeChaotic.v
+TypeBicatUnit/old_types_unit_polynomials.v
+TypeBicatUnit/old_types_unit_endpoints.v
+
 TypeBicatUnit/types_unit_polynomials.v
 TypeBicatUnit/types_unit_endpoints.v
 
