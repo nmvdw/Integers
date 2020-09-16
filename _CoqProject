@@ -13,32 +13,35 @@ Categories/Zb_paths.v
 Categories/Zh_paths.v
 Categories/path_constructors.v
 
-Bicategories/TypePrebicat.v
-Bicategories/EndOneTypes.v
-Bicategories/DispPrebicat.v
-Bicategories/PointTypes.v
-Bicategories/PointTypesHomot.v
-Bicategories/EndTypes.v
-Bicategories/EndTypesHomot.v
-Bicategories/DispProd.v
-Bicategories/ZbPaths.v
+Prebicategories/TypePrebicat.v
+Prebicategories/EndOneTypes.v
+Prebicategories/DispPrebicat.v
+Prebicategories/PointTypes.v
+Prebicategories/PointTypesHomot.v
+Prebicategories/EndTypes.v
+Prebicategories/EndTypesHomot.v
+Prebicategories/DispProd.v
+Prebicategories/ZbPaths.v
 
 
-Bicategories/Prebicat.v
-Bicategories/Invertible_2cells.v
-Bicategories/Unitors.v
-Bicategories/BicategoryLaws.v
+Prebicategories/Prebicat.v
+Prebicategories/Invertible_2cells.v
+Prebicategories/Unitors.v
+Prebicategories/BicategoryLaws.v
 
-Bicategories/PseudoFunctor.v
-Bicategories/PseudoTransformation.v
-Bicategories/Composition.v
-Bicategories/Projection.v
-Bicategories/AddEndpoints.v
+Prebicategories/PseudoFunctor.v
+Prebicategories/PseudoTransformation.v
+Prebicategories/Composition.v
+Prebicategories/Projection.v
+Prebicategories/AddEndpoints.v
 
-Bicategories/Algebra.v
-Bicategories/DispDepProd.v
+Prebicategories/Algebra.v
+Prebicategories/DispDepProd.v
 
-Bicategories/TypesUnitBicat.v
-Bicategories/TypeChaotic.v
+Prebicategories/TypesUnitBicat.v
+
+TypeBicatUnit/TypeChaotic.v
+TypeBicatUnit/types_unit_polynomials.v
+TypeBicatUnit/types_unit_endpoints.v
 
 Zb_Zh_sig.v

@@ -27,6 +27,29 @@ Defined.
 
 Definition type_chaotic_bicat : bicat := chaotic_bicat type_chaotic_precat.
 
+Lemma chaotic_invertible_2cell
+      {a b : type_chaotic_bicat}
+      {f g : a --> b}
+      {θ : f ==> g}
+  : is_invertible_2cell θ.
+Proof.
+  use tpair.  
+  - exact tt.
+  - split; exact (idpath tt).
+Qed.
+   
+
+Lemma chaotic_invertible_2cell0 {a b : type_chaotic_bicat} {f g : a --> b}
+  : invertible_2cell f g.
+Proof.
+  use tpair.  
+  - exact tt.
+  - use tpair.
+    + exact tt.
+    + split; exact (idpath tt).
+Qed.
+
+
 (* pointtypes using chaotic displayed bicategories *)
 Definition pointtypes_disp : disp_bicat type_chaotic_bicat.
 Proof.

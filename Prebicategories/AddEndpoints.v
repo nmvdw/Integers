@@ -10,14 +10,14 @@ Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
 Require Import UniMath.Bicategories.Core.Examples.OneTypes.
 Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
-Require Import Integers.Bicategories.TypePrebicat.
-Require Import Integers.Bicategories.DispPrebicat.
-Require Import Integers.Bicategories.Invertible_2cells.
-Require Import Integers.Bicategories.PseudoFunctor.
+Require Import Integers.Prebicategories.TypePrebicat.
+Require Import Integers.Prebicategories.DispPrebicat.
+Require Import Integers.Prebicategories.Invertible_2cells.
+Require Import Integers.Prebicategories.PseudoFunctor.
 Import PseudoFunctor.Notations.
-Require Import Integers.Bicategories.PseudoTransformation.
-Require Import Integers.Bicategories.Composition.
-Require Import Integers.Bicategories.Projection.
+Require Import Integers.Prebicategories.PseudoTransformation.
+Require Import Integers.Prebicategories.Composition.
+Require Import Integers.Prebicategories.Projection.
 
 Local Open Scope cat.
 Local Open Scope mor_disp_scope.

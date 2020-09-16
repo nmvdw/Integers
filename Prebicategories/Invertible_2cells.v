@@ -9,8 +9,8 @@ Require Import UniMath.Bicategories.Core.Unitors.
 Local Open Scope bicategory_scope.
 Local Open Scope cat.
 
-Require Import Integers.Bicategories.DispPrebicat.
-Require Import Integers.Bicategories.Prebicat.
+Require Import Integers.Prebicategories.DispPrebicat.
+Require Import Integers.Prebicategories.Prebicat.
 
 
 (** ** Two-cells that are isomorphisms **)

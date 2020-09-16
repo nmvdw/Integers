@@ -7,11 +7,11 @@ Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
 Require Import UniMath.Bicategories.Core.Examples.OneTypes.
 Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
-Require Import Integers.Bicategories.DispPrebicat. Import DispPrebicat.Notations.
-Require Import Integers.Bicategories.DispProd.
-Require Import Integers.Bicategories.TypePrebicat.
-Require Import Integers.Bicategories.PointTypes.
-Require Import Integers.Bicategories.EndTypes.
+Require Import Integers.Prebicategories.DispPrebicat. Import DispPrebicat.Notations.
+Require Import Integers.Prebicategories.DispProd.
+Require Import Integers.Prebicategories.TypePrebicat.
+Require Import Integers.Prebicategories.PointTypes.
+Require Import Integers.Prebicategories.EndTypes.
 
 Local Open Scope cat.
 Local Open Scope mor_disp_scope.

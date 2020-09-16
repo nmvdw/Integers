@@ -13,10 +13,10 @@ Require Import UniMath.Bicategories.Core.Invertible_2cells.
 Require Import UniMath.Bicategories.Core.Examples.OneTypes.
 Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
-Require Import Integers.Bicategories.TypePrebicat.
-Require Import Integers.Bicategories.DispPrebicat.
-Require Import Integers.Bicategories.BicategoryLaws.
-Require Import Integers.Bicategories.Unitors.
+Require Import Integers.Prebicategories.TypePrebicat.
+Require Import Integers.Prebicategories.DispPrebicat.
+Require Import Integers.Prebicategories.BicategoryLaws.
+Require Import Integers.Prebicategories.Unitors.
 
 Local Open Scope cat.
 Local Open Scope mor_disp_scope.

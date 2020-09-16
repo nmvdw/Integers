@@ -8,10 +8,10 @@ Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
 Require Import UniMath.Bicategories.Core.Examples.OneTypes.
 Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
-Require Import Integers.Bicategories.TypePrebicat.
-Require Import Integers.Bicategories.DispPrebicat.
-Require Import Integers.Bicategories.Invertible_2cells.
-Require Import Integers.Bicategories.PseudoFunctor.
+Require Import Integers.Prebicategories.TypePrebicat.
+Require Import Integers.Prebicategories.DispPrebicat.
+Require Import Integers.Prebicategories.Invertible_2cells.
+Require Import Integers.Prebicategories.PseudoFunctor.
 Import PseudoFunctor.Notations.
 
 Local Open Scope cat.
