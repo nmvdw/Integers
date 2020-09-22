@@ -47,4 +47,10 @@ TypeBicatUnit/old_types_unit_endpoints.v
 TypeBicatUnit/types_unit_polynomials.v
 TypeBicatUnit/types_unit_endpoints.v
 
+TypePrebicat/type_prebicat.v
+TypePrebicat/type_prebicat_tpair.v
+
+TypeHomot/type_homot.v
+TypeHomot/polynomials.v
+
 Zb_Zh_sig.v
