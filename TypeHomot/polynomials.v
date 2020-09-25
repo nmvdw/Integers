@@ -426,3 +426,29 @@ Proof.
 Defined.
 
 Notation "⦃ P ⦄" := (poly_type P).
+
+Definition poly_id
+           (P : poly_code)
+           (X : UU)
+  : (λ x : act P X, x) ~ (actmap P (λ x : X, x)).
+Proof.
+  induction P as [A | | | ].
+  - exact (λ x, idpath x).
+  - exact (λ x, idpath x).
+  - exact (λ x, !coprodf_id x @ coprodf_path IHP1 IHP2 x).
+  - exact (λ x, !dirprodf_id x @ dirprodf_path IHP1 IHP2 x).
+Defined.
+
+Definition poly_homot
+           (P : poly_code)
+           {X Y : UU}
+           {f g : X → Y}
+           (p : f ~ g)
+  : actmap P f ~ actmap P g.
+Proof.
+  induction P as [A | | |].
+  - exact (λ x, idpath x).
+  - exact p.
+  - exact (coprodf_path IHP1 IHP2).
+  - exact (dirprodf_path IHP1 IHP2).
+Defined.

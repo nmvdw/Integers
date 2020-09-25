@@ -59,9 +59,9 @@ Section TransLaws.
      See `is_pstrans`, `psnaturality_natural`, ...*)
   
   Definition pseudotrans_id_law : UU
-    := ∏ a : C, runitor (η a) • linvunitor (η a) • (pseudofunctor_id F a ▹ η a)
-       = (η a ◃ pseudofunctor_id G a) • η₁ η (identity a).
-
+    := ∏ a : C, (η a ◃ pseudofunctor_id G a) • η₁ η (identity a)
+                = runitor (η a) • linvunitor (η a) • (pseudofunctor_id F a ▹ η a).
+  
   Definition pseudotrans_comp_law : UU
     := ∏ {a b c : C} (f : a --> b) (g : b --> c),
        η a ◃ pseudofunctor_comp G f g • η₁ η (f · g)
@@ -122,12 +122,12 @@ Definition pseudotrans_id
            {F G : pseudofunctor C D}
            (η : pseudotrans F G)
   : ∏ (a : C),
+    (η a ◃ pseudofunctor_id G a)
+      • pseudonaturality_of η (id₁ a)
+      =
 (runitor (η a))
       • linvunitor (η a)
       • (pseudofunctor_id F a ▹ η a)
-    =
-    (η a ◃ pseudofunctor_id G a)
-      • pseudonaturality_of η (id₁ a)
   := pr12 η.
 
 Definition pseudotrans_comp
@@ -164,7 +164,7 @@ Proof.
   { is_iso. }
   cbn.
   rewrite !vassocr.
-  exact (!pseudotrans_id η a).
+  exact (pseudotrans_id η a).
 Qed.
 
 

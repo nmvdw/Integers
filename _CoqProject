@@ -52,5 +52,6 @@ TypePrebicat/type_prebicat_tpair.v
 
 TypeHomot/type_homot.v
 TypeHomot/polynomials.v
+TypeHomot/endpoints.v
 
 Zb_Zh_sig.v
