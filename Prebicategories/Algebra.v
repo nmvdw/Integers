@@ -31,7 +31,7 @@ Section Algebra.
   Variable (F : pseudofunctor C C).
 
   Locate disp_functor_data.
-  Definition disp_f_alg_ob_mor : Core.disp_cat_ob_mor C.
+  Definition disp_alg_ob_mor : Core.disp_cat_ob_mor C.
   Proof.
     use tpair.
     - intro a.
@@ -40,8 +40,8 @@ Section Algebra.
       exact (invertible_2cell (ha · f) (#F f · hb)).
   Defined.
 
-  Definition disp_f_alg_id_comp
-    : Core.disp_cat_id_comp C disp_f_alg_ob_mor.
+  Definition disp_alg_id_comp
+    : Core.disp_cat_id_comp C disp_alg_ob_mor.
   Proof.
     split.
     - cbn. intros a ha.
@@ -61,28 +61,28 @@ Section Algebra.
       + exact (pseudofunctor_comp F f g).
   Defined.
 
-  Definition disp_f_alg_1_id_comp_cells : disp_prebicat_1_id_comp_cells C.
+  Definition disp_alg_1_id_comp_cells : disp_prebicat_1_id_comp_cells C.
   Proof.
     use tpair.
     - use tpair.
-      + exact disp_f_alg_ob_mor.
-      + exact disp_f_alg_id_comp.
+      + exact disp_alg_ob_mor.
+      + exact disp_alg_id_comp.
     - intros a b f g θ. cbn. intros ha hb ff gg.
       exact unit.
   Defined.
 
-  Definition disp_f_alg_ops : disp_prebicat_ops' disp_f_alg_1_id_comp_cells.
+  Definition disp_alg_ops : disp_prebicat_ops' disp_alg_1_id_comp_cells.
   Proof.
     repeat split.
   Qed.
 
-  Definition disp_f_alg_ops_laws : disp_prebicat_laws (_ ,, disp_f_alg_ops).
+  Definition disp_alg_ops_laws : disp_prebicat_laws (_ ,, disp_alg_ops).
   Proof.
     repeat split; intro; intros; apply isapropunit.
   Qed.
 
-  Definition disp_f_alg_prebicat : disp_prebicat C
-    := (_ ,, disp_f_alg_ops_laws).
+  Definition disp_alg_prebicat : disp_prebicat C
+    := (_ ,, disp_alg_ops_laws).
 
-  Definition prebicat_algebra := total_prebicat disp_f_alg_prebicat.
+  Definition prebicat_algebra := total_prebicat disp_alg_prebicat.
 End Algebra.
