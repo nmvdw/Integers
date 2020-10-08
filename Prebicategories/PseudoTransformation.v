@@ -54,9 +54,11 @@ Section TransLaws.
           {F G : pseudofunctor C D}.
   Variable (η : pseudotrans_data F G).
 
-  (* Definition pseudotrans_naturality := ... *)
-  (* is in UM but not in the paper 
-     See `is_pstrans`, `psnaturality_natural`, ...*)
+  Definition pseudotrans_naturality_law : UU
+    := ∏ (X Y : C) (f g : X --> Y) (α : f ==> g),
+       (η₀ η X ◃ ##G α) • η₁ η g
+       =
+       (η₁ η f) • (##F α ▹ η₀ η Y).
   
   Definition pseudotrans_id_law : UU
     := ∏ a : C, (η a ◃ pseudofunctor_id G a) • η₁ η (identity a)
@@ -73,7 +75,8 @@ Section TransLaws.
                      • (pseudofunctor_comp F f g ▹ η c).
 
   Definition is_pseudotrans : UU
-    := pseudotrans_id_law
+    := pseudotrans_naturality_law
+         × pseudotrans_id_law
          × pseudotrans_comp_law.
 End TransLaws.
 
@@ -115,7 +118,36 @@ Coercion pseudotrans_to_pseudotrans_data
   : pseudotrans_data F G
       := pr1 η.
 
-(* `psnaturality_(inv)_natural` *)
+Definition pseudotrans_natural
+           {C D : prebicat}
+           {F G : pseudofunctor C D}
+           (η : pseudotrans F G)
+  : ∏ (X Y : C) (f g : X --> Y) (α : f ==> g),
+    (η X ◃ ##G α)
+      • pseudonaturality_of η g
+    =
+    (pseudonaturality_of η f) • (##F α ▹ η Y)
+  := pr12 η.
+
+Definition pseudotrans_inv_natural
+           {C D : prebicat}
+           {F G : pseudofunctor C D}
+           (η : pseudotrans F G)
+  : ∏ (X Y : C) (f g : X --> Y) (α : f ==> g),
+    (pseudonaturality_of η f)^-1 • (η X ◃ ##G α)
+    =
+    (##F α ▹ η Y) • (pseudonaturality_of η g)^-1.
+Proof.
+  intros X Y f g α.
+  use vcomp_move_L_Mp.
+  { is_iso. }
+  etrans.
+  { exact (vassocl _ _ _). }
+  use vcomp_move_R_pM.
+  { is_iso. }
+  cbn.
+  exact (pseudotrans_natural η X Y f g α).
+Qed.  
 
 Definition pseudotrans_id
            {C D : prebicat}
@@ -128,7 +160,7 @@ Definition pseudotrans_id
 (runitor (η a))
       • linvunitor (η a)
       • (pseudofunctor_id F a ▹ η a)
-  := pr12 η.
+  := pr122 η.
 
 Definition pseudotrans_comp
            {C D : prebicat}
@@ -144,7 +176,7 @@ Definition pseudotrans_comp
       • (#F f ◃ pseudonaturality_of η g)
       • lassociator (#F f) (#F g) (η c)
       • (pseudofunctor_comp F f g ▹ η c)
-  := pr22 η.
+  := pr222 η.
 
 Definition pseudotrans_id_alt
            {C D : prebicat}
