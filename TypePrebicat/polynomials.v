@@ -157,8 +157,10 @@ Proof.
   - exact (λ A B f, idpath _).
   - exact (λ A B f, idpath _).
   - intros A B f. unfold pseudofunctor_id2_law in IHP1, IHP2.
+    cbn.
     Check (F₁ (poly_type_data P1) f).
     Check (IHP1 A B f).
+    
 
     (* We have to give paths between paths between functions, so we can't do funextsec *)
     (* If we would have had paths between homotopies, we could do funextsec,

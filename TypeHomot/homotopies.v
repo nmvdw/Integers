@@ -156,3 +156,83 @@ Section HITPathAlgebraProjections.
       endpoint_type (path_right Σ j) (pr1 X) x
     := pr2 X j x.
 End HITPathAlgebraProjections.
+
+Definition make_hit_path_algebra
+           {Σ : hit_signature}
+           (X : hit_prealgebra_type Σ)
+           (pX : ∏ (j : path_label Σ)
+                   (x : act (path_source Σ j) (prealg_carrier X)),
+                 endpoint_type (path_left Σ j) _ x
+                 =
+                 endpoint_type (path_right Σ j) _ x)
+  : hit_path_algebra_type Σ
+  := X,, pX.
+
+Definition preserves_path
+           {Σ : hit_signature}
+           {X Y : hit_path_algebra_type Σ}
+           (f : pr1 X --> pr1 Y)
+           (Hf : preserves_point (pr1 f))
+  : UU
+  := ∏ (j : path_label Σ)
+       (x : act (path_source Σ j) (path_alg_carrier X)),
+     maponpaths (prealg_map_carrier f) (path_alg_path X j x)
+                @ endpoint_type_mor (path_right Σ j) Hf x
+     =
+     endpoint_type_mor (path_left Σ j) Hf x
+                       @ path_alg_path Y j (actmap (path_source Σ j) _ x).
+
+Section HITPathAlgebraMorProjections.
+  Context {Σ : hit_signature}
+          {X Y : hit_path_algebra_type Σ}
+          (f : X --> Y).
+
+  Definition path_alg_map_carrier
+    : path_alg_carrier X → path_alg_carrier Y
+    := prealg_map_carrier (pr1 f).
+
+  Definition path_alg_map_commute
+    : ∏ (x : act (point_constr Σ) (path_alg_carrier X)),
+      path_alg_map_carrier (path_alg_constr X x)
+      =
+      path_alg_constr Y (actmap (point_constr Σ) path_alg_map_carrier x)
+    := prealg_map_commute (pr1 f).
+
+  (* Takes long to check (> 10 min) *)
+  (*Definition path_alg_map_path
+    : preserves_path (pr1 f) path_alg_map_commute
+    := λ j x, eqtohomot (pr2 f j) x.*)
+End HITPathAlgebraMorProjections.
+
+Definition make_hit_path_alg_map
+           {Σ : hit_signature}
+           {X Y : hit_path_algebra_type Σ}
+           (f : pr1 X --> pr1 Y)
+           (pf : preserves_path _ (prealg_map_commute f))
+  : X --> Y
+  := f,, λ i, funextsec _ _ _ (pf i).
+
+(** HIT algebras *)
+Definition is_hit_algebra_type
+           (Σ : hit_signature)
+           (X : hit_path_algebra_type Σ)
+  : UU
+  := ∏ (j : homot_label Σ)
+       (x : ⦃ homot_point_arg Σ j ⦄ (pr11 X))
+       (p : endpoint_type (homot_path_arg_left Σ j) (pr1 X) x
+            =
+            endpoint_type (homot_path_arg_right Σ j) (pr1 X) x),
+     homot_endpoint_type (homot_left_path Σ j) (pr1 X) (pr2 X) x p
+     =
+     homot_endpoint_type (homot_right_path Σ j) (pr1 X) (pr2 X) x p.
+
+(* Is not true for types *)
+(*Definition isaprop_is_hit_algebra_type
+           (Σ : hit_signature)
+           (X : hit_path_algebra_type Σ)
+  : isaprop (is_hit_algebra_type Σ X).
+Proof.
+  do 3 (use impred ; intro).
+  exact (one_type_isofhlevel (pr11 X) _ _ _ _).
+Defined.
+ *)
