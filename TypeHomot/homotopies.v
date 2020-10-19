@@ -236,3 +236,8 @@ Proof.
   exact (one_type_isofhlevel (pr11 X) _ _ _ _).
 Defined.
  *)
+
+Definition hit_algebra_type
+           (Σ : hit_signature)
+  : prebicat
+  := fullsubprebicat (hit_path_algebra_type Σ) (is_hit_algebra_type Σ).

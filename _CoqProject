@@ -37,6 +37,7 @@ Prebicategories/AddEndpoints.v
 
 Prebicategories/Algebra.v
 Prebicategories/DispDepProd.v
+Prebicategories/FullSub.v
 
 Prebicategories/TypesUnitBicat.v
 
@@ -52,6 +53,6 @@ TypePrebicat/type_prebicat_tpair.v
 
 TypeHomot/type_homot.v
 TypeHomot/polynomials.v
-TypeHomot/endpoints.v
+#TypeHomot/endpoints.v
 
 Zb_Zh_sig.v

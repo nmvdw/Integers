@@ -78,13 +78,61 @@ Definition endpoint_type_data
       (comp_pseudofunctor (⦃ Q ⦄) (pr1_pseudofunctor (disp_alg_prebicat (⦃ A ⦄)))).
 Proof.
   use make_pseudotrans_data.
-  - cbn.  exact (λ X, endpoint_type_ob e (pr2 X)).
+  - cbn. exact (λ X, endpoint_type_ob e (pr2 X)).
   - cbn. intros X Y f.
     use make_invertible_2cell.
     + exact (λ x, endpoint_type_mor e (pr12 f) x).
     + exact type_prebicat_invertible_2cell.
 Defined.
 
+
+Definition endpoint_type_natural
+           {A P Q : poly_code}
+           (e : endpoint A P Q)
+           {X Y : UU}
+           {cX : poly_act A X → X}
+           {cY : poly_act A Y → Y}
+           {f g : X → Y}
+           {ef : ((λ x, f (cX x)) ~ (λ x, cY (actmap A f x)))}
+           {eg : ((λ x, g (cX x)) ~ (λ x, cY (actmap A g x)))}
+           {αp : f ~ g}
+           (αh : (λ x : act A X, αp (cX x) @ eg x)
+                 =
+                 (λ x : act A X, ef x @ maponpaths cY (poly_homot A αp x)))
+           (x : act P X)
+  : poly_homot Q αp (endpoint_type_ob e cX x)
+               @ endpoint_type_mor e eg x
+    =
+    endpoint_type_mor e ef x
+                      @ maponpaths (endpoint_type_ob e cY) (poly_homot P αp x).
+Proof.
+  induction e as [ | | | | | | | P T t | | ].
+  - exact (pathscomp0rid _ @ !(maponpathsidfun _)).
+  - exact (path_assoc _ _ _
+                      @ maponpaths (λ z, z @ _) (IHe2 (endpoint_type_ob e1 cX x))
+                      @ !(path_assoc _ _ _)
+                      @ maponpaths
+                      (λ z, _ @ z)
+                      (!(maponpathscomp0 _ _ _)
+                        @ maponpaths (maponpaths (endpoint_type_ob e2 cY)) (IHe1 x)
+                        @ maponpathscomp0 _ _ _
+                        @ maponpaths (λ z, _ @ z) (maponpathscomp _ _ _))
+                      @ path_assoc _ _ _).
+  - exact (pathscomp0rid _).
+  - exact (pathscomp0rid _).
+  - exact (pathscomp0rid _ @ !(maponpaths_pr1_pathsdirprod _ _)).
+  - exact (pathscomp0rid _ @ !(maponpaths_pr2_pathsdirprod _ _)).
+  - exact (pathsdirprod_concat _ _ _ _
+                               @ paths_pathsdirprod (IHe1 x) (IHe2 x)
+                               @ !(pathsdirprod_concat _ _ _ _)
+                               @ maponpaths (λ z, _ @ z)
+                               (!(maponpaths_prod_path _ _ _))).
+  - exact (!(maponpaths_for_constant_function _ _)).
+  - exact (idpath (idpath (f0 x))).
+  - exact (eqtohomot αh x).
+Qed.    
+
+    
 Definition endpoint_type_id
            {A P Q : poly_code}
            (e : endpoint A P Q)
@@ -338,7 +386,35 @@ Definition endpoint_type_laws
   : is_pseudotrans (endpoint_type_data e).
 Proof.
   repeat split.
-  - intro X.
+  - intros X Y f g α.
+    use funextsec.
+    intro x.
+
+    Check (endpoint_type_natural e).
+    Check disp_2cells.
+    Check (pr2 f).
+    Check (pr2 α). Locate total_prebicat_cell_struct.
+    apply (endpoint_type_natural e).
+    cbn.
+    Check (pr2 g).
+    Locate disp_2cells.
+
+
+    (*    apply (pr2 α).*)
+
+    
+    use funextsec.
+    intro.
+    cbn in x.
+    Check (pr2 α).
+    Check (pr1 α).
+    Check (disp_2cells (pr1 α) (pr2 f) (pr2 g)).
+    
+    (*
+      apply (pr2 α). *)
+    Abort.
+(*
+- intro X.
     apply funextsec.
     exact (endpoint_type_id e (pr2 X)).
   - intros X Y Z f g.
@@ -353,3 +429,4 @@ Definition endpoint_type
       (comp_pseudofunctor ⦃ P ⦄ (pr1_pseudofunctor (disp_alg_prebicat ⦃ A ⦄)))
       (comp_pseudofunctor ⦃ Q ⦄ (pr1_pseudofunctor (disp_alg_prebicat ⦃ A ⦄)))
   := endpoint_type_data e,, endpoint_type_laws e.
+*)

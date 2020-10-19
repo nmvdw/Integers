@@ -54,12 +54,19 @@ Section TransLaws.
           {F G : pseudofunctor C D}.
   Variable (η : pseudotrans_data F G).
 
+  (*
   Definition pseudotrans_naturality_law : UU
     := ∏ (X Y : C) (f g : X --> Y) (α : f ==> g),
        (η₀ η X ◃ ##G α) • η₁ η g
        =
        (η₁ η f) • (##F α ▹ η₀ η Y).
-  
+   *)
+  Definition pseudotrans_naturality_law : UU
+    := ∏ (X Y : C) (f g : X --> Y) (α : f ==> g),
+       (pr1 η X ◃ ##G α) • pr2 η _ _ g
+       =
+       (pr2 η _ _ f) • (##F α ▹ pr1 η Y).
+
   Definition pseudotrans_id_law : UU
     := ∏ a : C, (η a ◃ pseudofunctor_id G a) • η₁ η (identity a)
                 = runitor (η a) • linvunitor (η a) • (pseudofunctor_id F a ▹ η a).
