@@ -35,7 +35,7 @@ Prebicategories/Composition.v
 Prebicategories/Projection.v
 Prebicategories/AddEndpoints.v
 
-Prebicategories/Algebra.v
+#Prebicategories/Algebra.v
 Prebicategories/DispDepProd.v
 Prebicategories/FullSub.v
 
