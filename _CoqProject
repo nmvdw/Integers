@@ -13,46 +13,51 @@ Categories/Zb_paths.v
 Categories/Zh_paths.v
 Categories/path_constructors.v
 
-Prebicategories/TypePrebicat.v
-Prebicategories/EndOneTypes.v
-Prebicategories/DispPrebicat.v
-Prebicategories/PointTypes.v
-Prebicategories/PointTypesHomot.v
-Prebicategories/EndTypes.v
-Prebicategories/EndTypesHomot.v
-Prebicategories/DispProd.v
-Prebicategories/ZbPaths.v
+#Prebicategories/TypePrebicat.v
+#Prebicategories/EndOneTypes.v
+#Prebicategories/DispPrebicat.v
+#Prebicategories/PointTypes.v
+#Prebicategories/PointTypesHomot.v
+#Prebicategories/EndTypes.v
+#Prebicategories/EndTypesHomot.v
+#Prebicategories/DispProd.v
+#Prebicategories/ZbPaths.v
+
+WildCategories/WildCat.v
+WildCategories/TypeWildCat.v
+WildCategories/DispWildCat.v
 
 
-Prebicategories/Prebicat.v
-Prebicategories/Invertible_2cells.v
-Prebicategories/Unitors.v
-Prebicategories/BicategoryLaws.v
 
-Prebicategories/PseudoFunctor.v
-Prebicategories/PseudoTransformation.v
-Prebicategories/Composition.v
-Prebicategories/Projection.v
-Prebicategories/AddEndpoints.v
+#Prebicategories/Prebicat.v
+#Prebicategories/Invertible_2cells.v
+#Prebicategories/Unitors.v
+#Prebicategories/BicategoryLaws.v
+
+#Prebicategories/PseudoFunctor.v
+#Prebicategories/PseudoTransformation.v
+#Prebicategories/Composition.v
+#Prebicategories/Projection.v
+#Prebicategories/AddEndpoints.v
 
 #Prebicategories/Algebra.v
-Prebicategories/DispDepProd.v
-Prebicategories/FullSub.v
+#Prebicategories/DispDepProd.v
+#Prebicategories/FullSub.v
 
-Prebicategories/TypesUnitBicat.v
+#Prebicategories/TypesUnitBicat.v
 
-TypeBicatUnit/TypeChaotic.v
-TypeBicatUnit/old_types_unit_polynomials.v
-TypeBicatUnit/old_types_unit_endpoints.v
+#TypeBicatUnit/TypeChaotic.v
+#TypeBicatUnit/old_types_unit_polynomials.v
+#TypeBicatUnit/old_types_unit_endpoints.v
 
-TypeBicatUnit/types_unit_polynomials.v
-TypeBicatUnit/types_unit_endpoints.v
+#TypeBicatUnit/types_unit_polynomials.v
+#TypeBicatUnit/types_unit_endpoints.v
 
-TypePrebicat/type_prebicat.v
-TypePrebicat/type_prebicat_tpair.v
+#TypePrebicat/type_prebicat.v
+#TypePrebicat/type_prebicat_tpair.v
 
-TypeHomot/type_homot.v
-TypeHomot/polynomials.v
+#TypeHomot/type_homot.v
+#TypeHomot/polynomials.v
 #TypeHomot/endpoints.v
 
 Zb_Zh_sig.v
