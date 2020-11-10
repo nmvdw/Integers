@@ -26,19 +26,21 @@ Categories/path_constructors.v
 WildCategories/WildCat.v
 WildCategories/TypeWildCat.v
 WildCategories/DispWildCat.v
-
+WildCategories/DispProd.v
 
 
 #Prebicategories/Prebicat.v
 #Prebicategories/Invertible_2cells.v
 #Prebicategories/Unitors.v
 #Prebicategories/BicategoryLaws.v
+WildCategories/Invertible_2cells.v
 
 #Prebicategories/PseudoFunctor.v
 #Prebicategories/PseudoTransformation.v
 #Prebicategories/Composition.v
 #Prebicategories/Projection.v
 #Prebicategories/AddEndpoints.v
+WildCategories/WildFunctor.v
 
 #Prebicategories/Algebra.v
 #Prebicategories/DispDepProd.v
