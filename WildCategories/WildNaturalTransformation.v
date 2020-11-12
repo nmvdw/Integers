@@ -55,6 +55,154 @@ Definition wild_nat_trans_morphisms
   : invertible_2cell (η a · #G f) (#F f · η b)
   := pr2 η a b f.
 
-Local Notation "'#'" := wild_nat_trans_morphisms.
+Local Notation "'$'" := wild_nat_trans_morphisms.
 
 (* Examples *)
+Definition id_wild_nat_trans {C D : wild_cat} (F : wild_functor C D)
+  : wild_nat_trans F F.
+Proof.
+  use make_wild_nat_trans.
+  - exact (λ a, id₁ (F a)).
+  - intros a b f. cbn.
+    use make_invertible_2cell.
+    + exact (lunitor (#F f) • rinvunitor (#F f)).
+    + is_iso.
+Defined.
+
+Definition comp_wild_nat_trans
+           {C D : wild_cat}
+           {F G H : wild_functor C D}
+           (η : wild_nat_trans F G)
+           (γ : wild_nat_trans G H)
+  : wild_nat_trans F H.
+Proof.
+  use make_wild_nat_trans.
+  - exact (λ a, η a · γ a).
+  - intros a b f. cbn.
+    use make_invertible_2cell.
+    + exact (rassociator (η a) (γ a) (#H f)
+                         • (η a ◃ $γ f)
+                         • lassociator (η a) (#G f) (γ b)
+                         • ($η f ▹ γ b)
+                         • rassociator (#F f) (η b) (γ b)).
+    + is_iso.
+      * exact (($γ f)^-1).
+      * exact (($η f)^-1).
+Defined.
+
+(*Notation "η • γ" := comp_wild_nat_trans.*)
+
+Definition lwhisker_wild_nat_trans
+           {C D E : wild_cat}
+           (F : wild_functor C D)
+           {G H : wild_functor D E}
+           (η : wild_nat_trans G H)
+  : wild_nat_trans (F ⋯ G) (F ⋯ H).
+Proof.
+  use make_wild_nat_trans.
+  - exact (λ a, η (F a)).
+  - exact (λ a b f, $η (#F f)).
+Defined.
+
+(*Notation "F ◃ η" := lwhisker_wild_nat_trans.*)
+
+Definition rwhisker_wild_nat_trans
+           {C D E : wild_cat}
+           {F G : wild_functor C D}
+           (η : wild_nat_trans F G)
+           (H : wild_functor D E)
+  : wild_nat_trans (F ⋯ H) (G ⋯ H).
+Proof.
+  use make_wild_nat_trans.
+  - exact (λ a, #H (η a)).
+  - intros a b f.
+    use make_invertible_2cell.
+    + exact (wild_functor_comp H (η a) (#G f) • ##H ($η f) • (wild_functor_comp H (#F f) (η b))^-1).
+    + is_iso.
+      * exact ((wild_functor_comp H (η a) (#G f))^-1).
+      * exact (wild_functor_is_iso H _).
+Defined.
+
+(*Notation "η ▹ H" := rwhisker_wild_nat_trans.*)
+
+Definition lunitor_wild_nat_trans
+           {C D : wild_cat}
+           (F : wild_functor C D)
+  : wild_nat_trans (id_wild_functor C ⋯ F) F.
+Proof.
+  use make_wild_nat_trans.
+  - exact (λ a, identity (F a)).
+  - intros a b f.
+    use make_invertible_2cell.
+    + exact (lunitor (#F f) • rinvunitor (#F f)).
+    + is_iso.
+Defined.
+
+Definition linvunitor_wild_nat_trans
+           {C D : wild_cat}
+           (F : wild_functor C D)
+  : wild_nat_trans F (id_wild_functor C ⋯ F).
+Proof.
+  use make_wild_nat_trans.
+  - exact (λ a, identity (F a)).
+  - intros a b f.
+    use make_invertible_2cell.
+    + exact (lunitor (#F f) • rinvunitor (#F f)).
+    + is_iso.
+Defined.
+
+Definition runitor_wild_nat_trans
+           {C D : wild_cat}
+           (F : wild_functor C D)
+  : wild_nat_trans (F ⋯ id_wild_functor D) F.
+Proof.
+  use make_wild_nat_trans.
+  - exact (λ a, identity (F a)).
+  - intros a b f.
+    use make_invertible_2cell.
+    + exact (lunitor (#F f) • rinvunitor (#F f)).
+    + is_iso.
+Defined.
+
+Definition rinvunitor_wild_nat_trans
+           {C D : wild_cat}
+           (F : wild_functor C D)
+  : wild_nat_trans F (F ⋯ id_wild_functor D).
+Proof.
+  use make_wild_nat_trans.
+  - exact (λ a, identity (F a)).
+  - intros a b f.
+    use make_invertible_2cell.
+    + exact (lunitor (#F f) • rinvunitor (#F f)).
+    + is_iso.
+Defined.
+
+Definition lassociator_wild_nat_trans
+           {C D E B : wild_cat}
+           (F : wild_functor C D)
+           (G : wild_functor D E)
+           (H : wild_functor E B)
+  : wild_nat_trans (F ⋯ (G ⋯ H)) ((F ⋯ G) ⋯ H).
+Proof.
+  use make_wild_nat_trans.
+  - exact (λ a, identity (H (G (F a)))).
+  - intros a b f.
+    use make_invertible_2cell.
+    + exact (lunitor (#H (#G (#F f))) • rinvunitor (#H (#G (#F f)))).
+    + is_iso.
+Defined.
+
+Definition rassociator_wild_nat_trans
+           {C D E B : wild_cat}
+           (F : wild_functor C D)
+           (G : wild_functor D E)
+           (H : wild_functor E B)
+  : wild_nat_trans ((F ⋯ G) ⋯ H) (F ⋯ (G ⋯ H)).
+Proof.
+  use make_wild_nat_trans.
+  - exact (λ a, identity (H (G (F a)))).
+  - intros a b f.
+    use make_invertible_2cell.
+    + exact (lunitor (#H (#G (#F f))) • rinvunitor (#H (#G (#F f)))).
+    + is_iso.
+Defined.

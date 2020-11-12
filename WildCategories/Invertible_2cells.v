@@ -11,13 +11,50 @@ Require Import Integers.WildCategories.WildCat.
 
 Local Open Scope cat.
 
+Lemma is_invertible_2cell_lunitor {C : wild_cat} {a b : C} (f : a --> b)
+  : is_invertible_2cell (lunitor f).
+Proof.
+  exact (linvunitor f).
+Defined.
+
+Lemma is_invertible_2cell_linvunitor {C : wild_cat} {a b : C} (f : a --> b)
+  : is_invertible_2cell (linvunitor f).
+Proof.
+  exact (lunitor f).
+Defined.
+
+Lemma is_invertible_2cell_runitor {C : wild_cat} {a b : C} (f : a --> b)
+  : is_invertible_2cell (runitor f).
+Proof.
+  exact (rinvunitor f).
+Defined.
+
+Lemma is_invertible_2cell_rinvunitor {C : wild_cat} {a b : C} (f : a --> b)
+  : is_invertible_2cell (rinvunitor f).
+Proof.
+  exact (runitor f).
+Defined.
+
+Lemma is_invertible_2cell_rassociator {C : wild_cat} {a b c d : C}
+      (f : a --> b) (g : b --> c) (h : c --> d)
+  : is_invertible_2cell (rassociator f g h).
+Proof.
+  exact (lassociator f g h).
+Defined.
+
+Lemma is_invertible_2cell_lassociator {C : wild_cat} {a b c d : C}
+      (f : a --> b) (g : b --> c) (h : c --> d)
+  : is_invertible_2cell (lassociator f g h).
+Proof.
+  exact (rassociator f g h).
+Defined.
+
 Lemma is_invertible_2cell_vcomp {C : wild_cat} {a b : C} {f g h: a --> b}
       {x : f ==> g} (inv_x : is_invertible_2cell x)
       {y : g ==> h} (inv_y : is_invertible_2cell y)
   : is_invertible_2cell (x • y).
 Proof.
-  use make_is_invertible_2cell.
-  - exact (inv_y^-1 • inv_x^-1).
+  exact (inv_y^-1 • inv_x^-1).
 Defined.
 
 Lemma is_invertible_2cell_lwhisker {C : wild_cat} {a b c : C}
@@ -25,8 +62,7 @@ Lemma is_invertible_2cell_lwhisker {C : wild_cat} {a b c : C}
       {x : g1 ==> g2} (inv_x : is_invertible_2cell x)
   : is_invertible_2cell (f ◃ x).
 Proof.
-  use make_is_invertible_2cell.
-  - exact (f ◃ inv_x^-1).
+  exact (f ◃ inv_x^-1).
 Defined.
 
 
@@ -34,8 +70,7 @@ Lemma is_invertible_2cell_rwhisker {C : wild_cat} {a b c : C} {f1 f2 : a --> b} 
       {x : f1 ==> f2} (inv_x : is_invertible_2cell x)
   : is_invertible_2cell (x ▹ g).
 Proof.
-  use make_is_invertible_2cell.
-  - exact (inv_x^-1 ▹ g).
+  exact (inv_x^-1 ▹ g).
 Defined.
 
 
@@ -48,12 +83,10 @@ Definition is_invertible_2cell_hcomp
        (inv_η₂ : is_invertible_2cell η₂)
   : is_invertible_2cell (η₁ ⋆⋆ η₂).
 Proof.
-  use make_is_invertible_2cell.
-  - exact (inv_η₁^-1 ⋆⋆ inv_η₂^-1).
+  exact (inv_η₁^-1 ⋆⋆ inv_η₂^-1).
 Defined.
 
 (* .. *)
-
 
 Ltac is_iso :=
   match goal with

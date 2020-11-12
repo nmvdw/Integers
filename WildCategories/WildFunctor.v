@@ -1,6 +1,7 @@
 (** Wild Functors between Wild Categories **)
 (* Compiled from different files in UniMath/Bicategories, mainly PseudoFunctors/Display/PseudoFunctorBicat.v and PseudoFunctors/PseudoFunctor.v *)
 (* UniMath defines pseudofunctors as instances of the pseudofunctor category, here they are defined directly. *)
+(* This file also contains the identity, composition and projection wild functor, from UniMath/Bicategories/PseudoFunctors/Examples/Identity.v, Composition.v and Projection.v *)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
@@ -89,7 +90,8 @@ Definition wild_functor_is_iso
   := ##F (θ^-1).
 
 (* Examples *)
-Definition id_wild_functor {C : wild_cat} : wild_functor C C.
+
+Definition id_wild_functor (C : wild_cat) : wild_functor C C.
 Proof.
   use make_wild_functor.
   - exact (λ a, a).
@@ -110,21 +112,32 @@ Proof.
   - exact (λ a b f, (#G (#F f))).
   - exact (λ a b f g θ, (##G (##F θ))).
   - intros a. cbn.
-    use tpair.
+    use make_invertible_2cell.
     + exact (wild_functor_id G (F a) • ##G (wild_functor_id F a)).
     + cbn. is_iso.
       * exact (wild_functor_id G (F a)).
       * exact (wild_functor_is_iso G (wild_functor_id F a)).
   - intros a b c f g. cbn.
-    use tpair.
+    use make_invertible_2cell.
     exact (wild_functor_comp G (#F f) (#F g) • ##G (wild_functor_comp F f g)).    
     + cbn. is_iso.
       * exact (wild_functor_comp G (#F f) (#F g)).
       * exact (wild_functor_is_iso G (wild_functor_comp F f g)).
 Defined.
 
-      
+Definition pr1_wild_functor {C : wild_cat} (D : disp_wild_cat C)
+  : wild_functor (total_wild_cat D) C.
+Proof.
+  use make_wild_functor.
+  - exact (λ a, pr1 a).
+  - exact (λ a b f, pr1 f).
+  - exact (λ a b f g θ, pr1 θ).
+  - exact (λ a, id2 (identity (pr1 a)) ,, id2 (identity (pr1 a))).
+  - exact (λ a b c f g, id2 (pr1 f · pr1 g) ,, id2 (pr1 f · pr1 g)).
+Defined.
+
 Module Notations.
   Notation "'#'" := wild_functor_morphisms.
   Notation "'##'" := wild_functor_cells.
+  Notation "F ⋯ G" := (comp_wild_functor F G) (at level 40). 
 End Notations.
