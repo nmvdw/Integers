@@ -51,18 +51,10 @@ WildCategories/Algebra.v
 WildCategories/DispDepProd.v
 WildCategories/FullSub.v
 
-#TypeBicatUnit/TypeChaotic.v
-#TypeBicatUnit/old_types_unit_polynomials.v
-#TypeBicatUnit/old_types_unit_endpoints.v
-
-#TypeBicatUnit/types_unit_polynomials.v
-#TypeBicatUnit/types_unit_endpoints.v
-
-#TypePrebicat/type_prebicat.v
-#TypePrebicat/type_prebicat_tpair.v
-
 #TypeHomot/type_homot.v
 #TypeHomot/polynomials.v
 #TypeHomot/endpoints.v
+TypeWildCat/TypeWildCat.v
+TypeWildCat/polynomials.v
 
 Zb_Zh_sig.v
