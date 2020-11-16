@@ -42,6 +42,7 @@ WildCategories/Invertible_2cells.v
 #Prebicategories/AddEndpoints.v
 WildCategories/WildFunctor.v
 WildCategories/WildNaturalTransformation.v
+WildCategories/Add2CellUnit.v
 
 #Prebicategories/Algebra.v
 #Prebicategories/DispDepProd.v
@@ -56,5 +57,7 @@ WildCategories/FullSub.v
 #TypeHomot/endpoints.v
 TypeWildCat/TypeWildCat.v
 TypeWildCat/polynomials.v
+TypeWildCat/endpoints.v
+TypeWildCat/homotopiesUnit.v
 
 Zb_Zh_sig.v

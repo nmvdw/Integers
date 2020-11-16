@@ -206,3 +206,7 @@ Proof.
     + exact (lunitor (#H (#G (#F f))) • rinvunitor (#H (#G (#F f)))).
     + is_iso.
 Defined.
+
+Module Notations.
+  Notation "'$'" := wild_nat_trans_morphisms.
+End Notations.

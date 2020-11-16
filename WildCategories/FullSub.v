@@ -35,7 +35,7 @@ Proof.
 Qed.
 
 Section DispWildCatCellsUnit.
-  Context {C : wild_cat} (D : disp_wild_cat C).
+  Context {C : wild_cat} (D : disp_cat_data C).
 
   Definition disp_cells_unit_data : disp_wild_cat_1_id_comp_cells C.
   Proof.
@@ -50,3 +50,14 @@ Section DispWildCatCellsUnit.
     - repeat split.
   Defined.
 End DispWildCatCellsUnit.
+
+(* From  UniMath/Bicategories/DisplayedBicats/Examples/FullSub.v *)
+Section FullSubWildCat.
+  Variable (C : wild_cat)
+           (P : C → UU).
+
+  Definition disp_full_sub_wild_cat : disp_wild_cat C
+    := disp_cells_unit (disp_full_sub_data C P).
+
+  Definition full_sub_wild_cat : wild_cat := total_wild_cat disp_full_sub_wild_cat.
+End FullSubWildCat.
