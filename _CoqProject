@@ -39,15 +39,16 @@ WildCategories/Invertible_2cells.v
 #Prebicategories/PseudoTransformation.v
 #Prebicategories/Composition.v
 #Prebicategories/Projection.v
-#Prebicategories/AddEndpoints.v
 WildCategories/WildFunctor.v
 WildCategories/WildNaturalTransformation.v
-WildCategories/Add2CellUnit.v
 
+#Prebicategories/AddEndpoints.v
 #Prebicategories/Algebra.v
 #Prebicategories/DispDepProd.v
 #Prebicategories/FullSub.v
 #Prebicategories/TypesUnitBicat.v
+WildCategories/Add2CellUnit.v
+WildCategories/Add2Cell.v
 WildCategories/Algebra.v
 WildCategories/DispDepProd.v
 WildCategories/FullSub.v
