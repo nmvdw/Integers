@@ -53,6 +53,8 @@ WildCategories/Algebra.v
 WildCategories/DispDepProd.v
 WildCategories/FullSub.v
 
+WildCategories/Initial.v
+
 #TypeHomot/type_homot.v
 #TypeHomot/polynomials.v
 #TypeHomot/endpoints.v
