@@ -54,6 +54,7 @@ WildCategories/DispDepProd.v
 WildCategories/FullSub.v
 
 WildCategories/Initial.v
+WildCategories/Adjunction.v
 
 #TypeHomot/type_homot.v
 #TypeHomot/polynomials.v
