@@ -36,17 +36,17 @@ Proof.
     pose (initial_2cell
              (adj_unit A i · #(adj_right A) α)
              (adj_unit A i · #(adj_right A) β)) as θ.
-    refine (linvunitor α • _).
-    refine ((adj_tL A i)^-1 ▹ α • _).
-    refine (rassociator _ _ _ • _).
-    refine (#(adj_left A) (adj_unit A i) ◃ $(adj_counit A) α • _).
-    refine (lassociator _ _ _ • _).
-    refine (wild_functor_comp (adj_left A) _ _ ▹ adj_counit A d • _).
-    refine (##(adj_left A) θ ▹ adj_counit A d • _).
-    refine ((wild_functor_comp (adj_left A) _ _)^-1 ▹ adj_counit A d • _).
-    refine (rassociator _ _ _ • _).
-    refine (#(adj_left A) (adj_unit A i) ◃ ($(adj_counit A) β)^-1 • _).
-    refine (lassociator _ _ _ • _).
-    refine (adj_tL A i ▹ β • _).
-    exact (lunitor β).
+    exact (linvunitor α
+           • ((adj_tL A i)^-1 ▹ α)
+           • rassociator _ _ _
+           • (#(adj_left A) (adj_unit A i) ◃ $(adj_counit A) α)
+           • lassociator _ _ _
+           • (wild_functor_comp (adj_left A) _ _ ▹ adj_counit A d)
+           • (##(adj_left A) θ ▹ adj_counit A d)
+           • ((wild_functor_comp (adj_left A) _ _)^-1 ▹ adj_counit A d)
+           • rassociator _ _ _
+           • (#(adj_left A) (adj_unit A i) ◃ ($(adj_counit A) β)^-1)
+           • lassociator _ _ _
+           • (adj_tL A i ▹ β)
+           • lunitor β).
 Qed.
