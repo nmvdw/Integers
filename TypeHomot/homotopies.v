@@ -18,10 +18,10 @@ Require Import Integers.Prebicategories.Projection.
 Require Import Integers.Prebicategories.Algebra.
 Require Import Integers.Prebicategories.DispDepProd.
 Require Import Integers.Prebicategories.AddEndpoints.
+Require Import Integers.Prebicategories.FullSub.
 Require Import Integers.TypeHomot.type_homot.
 Require Import Integers.TypeHomot.polynomials.
 Require Import Integers.TypeHomot.endpoints.
-
 
 Local Open Scope cat.
 Local Open Scope bicategory_scope.
@@ -236,6 +236,9 @@ Proof.
   exact (one_type_isofhlevel (pr11 X) _ _ _ _).
 Defined.
  *)
+
+
+
 
 Definition hit_algebra_type
            (Σ : hit_signature)

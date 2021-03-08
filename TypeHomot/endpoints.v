@@ -386,35 +386,7 @@ Definition endpoint_type_laws
   : is_pseudotrans (endpoint_type_data e).
 Proof.
   repeat split.
-  - intros X Y f g α.
-    use funextsec.
-    intro x.
-
-    Check (endpoint_type_natural e).
-    Check disp_2cells.
-    Check (pr2 f).
-    Check (pr2 α). Locate total_prebicat_cell_struct.
-    apply (endpoint_type_natural e).
-    cbn.
-    Check (pr2 g).
-    Locate disp_2cells.
-
-
-    (*    apply (pr2 α).*)
-
-    
-    use funextsec.
-    intro.
-    cbn in x.
-    Check (pr2 α).
-    Check (pr1 α).
-    Check (disp_2cells (pr1 α) (pr2 f) (pr2 g)).
-    
-    (*
-      apply (pr2 α). *)
-    Abort.
-(*
-- intro X.
+  - intro X.
     apply funextsec.
     exact (endpoint_type_id e (pr2 X)).
   - intros X Y Z f g.
@@ -429,4 +401,3 @@ Definition endpoint_type
       (comp_pseudofunctor ⦃ P ⦄ (pr1_pseudofunctor (disp_alg_prebicat ⦃ A ⦄)))
       (comp_pseudofunctor ⦃ Q ⦄ (pr1_pseudofunctor (disp_alg_prebicat ⦃ A ⦄)))
   := endpoint_type_data e,, endpoint_type_laws e.
-*)

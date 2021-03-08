@@ -38,52 +38,59 @@ Definition make_pseudotrans_data
   := (η₀ ,, η₁).
 
 (* Data projections *)
-Definition η₀ {C D : prebicat} {F G : pseudofunctor C D} (η : pseudotrans_data F G) (a : C)
+Definition pseudotrans_objects
+           {C D : prebicat}
+           {F G : pseudofunctor C D}
+           (η : pseudotrans_data F G)
+           (a : C)
   : F a --> G a
-      := pr1 η a.
+  := pr1 η a.
 
-Coercion η₀ : pseudotrans_data >-> Funclass.
+Coercion pseudotrans_objects : pseudotrans_data >-> Funclass.
 
-Definition η₁ {C D : prebicat} {F G : pseudofunctor C D} (η : pseudotrans_data F G)
-           {a b : C} (f : a --> b)
+Definition pseudotrans_morphisms
+           {C D : prebicat}
+           {F G : pseudofunctor C D}
+           (η : pseudotrans_data F G)
+           {a b : C}
+           (f : a --> b)
   : invertible_2cell (η a · #G f) (#F f · η b)
-:= pr2 η a b f.
+  := pr2 η a b f.
+
+Local Notation "'$'" := pseudotrans_morphisms.
 
 Section TransLaws.
   Context {C D : prebicat}
           {F G : pseudofunctor C D}.
   Variable (η : pseudotrans_data F G).
 
-  (*
   Definition pseudotrans_naturality_law : UU
     := ∏ (X Y : C) (f g : X --> Y) (α : f ==> g),
-       (η₀ η X ◃ ##G α) • η₁ η g
+       (η X ◃ ##G α) • $η g
        =
-       (η₁ η f) • (##F α ▹ η₀ η Y).
-   *)
-  Definition pseudotrans_naturality_law : UU
-    := ∏ (X Y : C) (f g : X --> Y) (α : f ==> g),
-       (pr1 η X ◃ ##G α) • pr2 η _ _ g
-       =
-       (pr2 η _ _ f) • (##F α ▹ pr1 η Y).
-
+       ($η f) • (##F α ▹ η Y).
+  
   Definition pseudotrans_id_law : UU
-    := ∏ a : C, (η a ◃ pseudofunctor_id G a) • η₁ η (identity a)
+    := ∏ a : C, (η a ◃ pseudofunctor_id G a) • $η (identity a)
                 = runitor (η a) • linvunitor (η a) • (pseudofunctor_id F a ▹ η a).
   
   Definition pseudotrans_comp_law : UU
     := ∏ {a b c : C} (f : a --> b) (g : b --> c),
-       η a ◃ pseudofunctor_comp G f g • η₁ η (f · g)
+       η a ◃ pseudofunctor_comp G f g • $η (f · g)
        = lassociator (η a) (#G f) (#G g)
-                     • (η₁ η f ▹ #G g)
+                     • ($η f ▹ #G g)
                      • rassociator (#F f) (η b) (#G g)
-                     • (#F f ◃ η₁ η g)
+                     • (#F f ◃ $η g)
                      •  lassociator (#F f) (#F g) (η c)
                      • (pseudofunctor_comp F f g ▹ η c).
 
-  Definition is_pseudotrans : UU
+(*  Definition is_pseudotrans : UU
     := pseudotrans_naturality_law
          × pseudotrans_id_law
+         × pseudotrans_comp_law. *)
+  
+  Definition is_pseudotrans : UU
+    := pseudotrans_id_law
          × pseudotrans_comp_law.
 End TransLaws.
 
@@ -125,7 +132,7 @@ Coercion pseudotrans_to_pseudotrans_data
   : pseudotrans_data F G
       := pr1 η.
 
-Definition pseudotrans_natural
+(*Definition pseudotrans_natural
            {C D : prebicat}
            {F G : pseudofunctor C D}
            (η : pseudotrans F G)
@@ -134,8 +141,9 @@ Definition pseudotrans_natural
       • pseudonaturality_of η g
     =
     (pseudonaturality_of η f) • (##F α ▹ η Y)
-  := pr12 η.
+  := pr12 η.*)
 
+(*
 Definition pseudotrans_inv_natural
            {C D : prebicat}
            {F G : pseudofunctor C D}
@@ -154,7 +162,7 @@ Proof.
   { is_iso. }
   cbn.
   exact (pseudotrans_natural η X Y f g α).
-Qed.  
+Qed.  *)
 
 Definition pseudotrans_id
            {C D : prebicat}
@@ -167,7 +175,7 @@ Definition pseudotrans_id
 (runitor (η a))
       • linvunitor (η a)
       • (pseudofunctor_id F a ▹ η a)
-  := pr122 η.
+  := pr12 η.
 
 Definition pseudotrans_comp
            {C D : prebicat}
@@ -183,7 +191,7 @@ Definition pseudotrans_comp
       • (#F f ◃ pseudonaturality_of η g)
       • lassociator (#F f) (#F g) (η c)
       • (pseudofunctor_comp F f g ▹ η c)
-  := pr222 η.
+  := pr22 η.
 
 Definition pseudotrans_id_alt
            {C D : prebicat}
@@ -358,15 +366,15 @@ Proof.
     + cbn.
       intros a b f.
       unfold invertible_2cell.
-      exists (rassociator _ _ _ • (η a ◃ η₁ σ f) • lassociator _ _ _ • (η₁ η f ▹ σ b) • rassociator _ _ _).
+      exists (rassociator _ _ _ • (η a ◃ $σ f) • lassociator _ _ _ • ($η f ▹ σ b) • rassociator _ _ _).
       is_iso.
       * unfold is_invertible_2cell.
-        exists ((η₁ σ f)^-1).
+        exists (($σ f)^-1).
         split.
         -- apply vcomp_rinv.
         -- apply vcomp_linv.
       * unfold is_invertible_2cell.
-        exists ((η₁ η f)^-1).
+        exists (($η f)^-1).
         split.
         -- apply vcomp_rinv.
         -- apply vcomp_linv.
@@ -377,3 +385,4 @@ Proof.
 Abort.
 
 (* pseudotrans on data *)
+
