@@ -9,9 +9,7 @@ COQDEP = coqdep
 Categories/disp_precat.v
 Categories/total_precat.v
 Categories/point_constructors.v
-Categories/Zb_paths.v
 Categories/Zh_paths.v
-Categories/path_constructors.v
 
 Prebicategories/TypePrebicat.v
 Prebicategories/EndOneTypes.v
@@ -23,43 +21,45 @@ Prebicategories/EndTypesHomot.v
 Prebicategories/DispProd.v
 Prebicategories/ZbPaths.v
 
-WildCategories/WildCat.v
-#WildCategories/TypeWildCat.v
-WildCategories/DispWildCat.v
-WildCategories/DispProd.v
-
-
 Prebicategories/Prebicat.v
 Prebicategories/Invertible_2cells.v
 Prebicategories/Unitors.v
 Prebicategories/BicategoryLaws.v
-WildCategories/Invertible_2cells.v
-
 Prebicategories/PseudoFunctor.v
 Prebicategories/PseudoTransformation.v
 Prebicategories/Composition.v
 Prebicategories/Projection.v
-WildCategories/WildFunctor.v
-WildCategories/WildNaturalTransformation.v
 
 Prebicategories/AddEndpoints.v
 Prebicategories/Algebra.v
 Prebicategories/DispDepProd.v
 Prebicategories/FullSub.v
 Prebicategories/TypesUnitBicat.v
-WildCategories/Add2CellUnit.v
-WildCategories/Add2Cell.v
-WildCategories/Algebra.v
-WildCategories/DispDepProd.v
-WildCategories/FullSub.v
-
-WildCategories/Initial.v
-WildCategories/Adjunction.v
-WildCategories/AdjunctionsPreserveInitial.v
 
 TypeHomot/type_homot.v
 TypeHomot/polynomials.v
 TypeHomot/endpoints.v
 TypeHomot/homotopies.v
 
+WildCategories/WildCat.v
+WildCategories/DispWildCat.v
+WildCategories/DispProd.v
+
+WildCategories/Invertible_2cells.v
+
+WildCategories/WildFunctor.v
+WildCategories/WildNaturalTransformation.v
+
+WildCategories/Add2CellUnit.v
+WildCategories/Add2Cell.v
+WildCategories/Algebra.v
+WildCategories/DispDepProd.v
+WildCategories/FullSub.v
+
+
+WildCategories/Initial.v
+WildCategories/Adjunction.v
+WildCategories/AdjunctionsPreserveInitial.v
+
 Zb_Zh_sig.v
+Zb_Zh_sig_simple.v

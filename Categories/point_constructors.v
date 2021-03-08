@@ -65,6 +65,19 @@ Proof.
     + exact (λ X Y Z f g hX hY hZ p q x, q (f x) @ maponpaths g (p x)).
 Defined.
 
+
+Definition disp_end_data2
+  : disp_cat_data type_precat.
+Proof.
+  use tpair.
+  - use make_disp_cat_ob_mor.
+    + exact (λ X, X → X).
+    + exact (λ X Y hX hY f, ∏ (x : X),  f(hX x) = hY(f x)).
+  - split.
+    + exact (λ X f x, idpath _).
+    + exact (λ X Y Z f g hX hY hZ p q x, maponpaths g (p x) @ q (f x)).
+Defined.
+
 Definition disp_end_axioms
   : disp_precat_axioms disp_end_data.
 Proof.
@@ -89,8 +102,31 @@ Proof.
       exact (maponpathscomp0 h (q (f x)) (maponpaths g (p x))).
 Qed.
 
+Definition disp_end_axioms2
+  : disp_precat_axioms disp_end_data2.
+Proof.
+  simple refine (_ ,, _ ,, _).
+  - cbn ; unfold idfun.
+    intros X Y f hX hY p.
+    use funextsec ; intro x.
+    exact (idpath (p x)).
+  - cbn ; unfold idfun.
+    intros X Y f hX hY p.
+    use funextsec ; intro x.
+    exact (pathscomp0rid _ @ maponpathsidfun (p x)).
+  - cbn.
+    intros W X Y Z f g h hW hX hY hZ p q r.
+    use funextsec ; intro x.
+    refine (_ @ _ @ _).
+    + apply maponpaths_2.
+      exact (!maponpathscomp g h (p x)).
+    + apply path_assoc.
+    + apply maponpaths_2.
+      exact (!maponpathscomp0 h (maponpaths g (p x)) (q (f x))).
+Qed.
+
 Definition disp_end : disp_precat type_precat
-  := disp_end_data ,, disp_end_axioms.
+  := disp_end_data2 ,, disp_end_axioms2.
 
 (**
 Example: The precategories `TYPE_point` and `TYPE_end` are the total precategories of their disp_ counterparts

@@ -32,7 +32,7 @@ Adding the first coherency
  *)
 (* morfismen in _end zijn omgedraaid, maar nog niet hier *)
 
-(*
+
 Definition disp_sec_h_data : disp_cat_data TYPE2.
 Proof.
   use tpair.
@@ -42,29 +42,41 @@ Proof.
       exact (∏ z : (pr1 XX), pr22 XX (pr212 XX z) = z).
     + cbn.
       intros XX YY ε η ff.
-      exact (∏ z : (pr1 XX), η (pr1 ff z) = ((maponpaths (pr22 YY) (!(pr212 ff z))) @ (!(pr22 ff (pr212 XX z))) @ (maponpaths (pr1 ff) (ε z)))).
+      exact (∏ z : (pr1 XX), pr22 ff (pr212 XX z) @ maponpaths (pr22 YY) ((pr212 ff z)) @ η (pr1 ff z) = maponpaths (pr1 ff) (ε z)).
   - split.
     + cbn. intros XX ε z.
       unfold idfun.
-      refine (!_).
-      exact (maponpathsidfun (ε z)).
+      exact (!maponpathsidfun (ε z)).
     + cbn. intros XX YY ZZ ff gg ε η θ fff ggg z.
-      refine (_ @ _ @ _ @ _ @ !(!_ @ _ @ _ @ _)).
-      * apply ggg.
+      refine (_ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _).
+      * apply maponpaths.
+        apply maponpaths_2.
+        apply maponpathscomp0.
+      * apply maponpaths.
+        apply maponpaths_2.
+        apply maponpaths_2.
+        apply (maponpathscomp (pr1 gg)).
+      * apply (!path_assoc _ _ _).
       * apply maponpaths.
         apply maponpaths.
+        apply (!path_assoc _ _ _).
+      * apply maponpaths.
+        apply path_assoc.
+      * apply maponpaths.
+        apply maponpaths_2.
+        exact (!homotsec_natural (pr22 gg) (pr212 ff z)).
+      * apply maponpaths.
+        apply (!path_assoc _ _ _).
+      * apply maponpaths.
         apply maponpaths.
+        exact (ggg (pr1 ff z)).
+      * apply maponpaths.
+        apply maponpaths_2.
+        apply (!maponpathscomp _ _ _).
+      * apply maponpaths.
+        apply (!maponpathscomp0 (pr1 gg) _ _).
+      * apply (!maponpathscomp0 (pr1 gg) _ _).
+      * apply maponpaths.
         exact (fff z).
-      * apply maponpaths.
-        apply maponpaths.
-        apply maponpathscomp0.
-      * apply maponpaths.
-        apply maponpaths.
-        apply maponpaths.
-        apply maponpathscomp0.
-      * apply maponpaths.
-        apply maponpaths.
-        (* apply maponpathscomp. *)
-
-        Abort.
-*)
+      * apply (maponpathscomp (pr1 ff)).
+Defined.
