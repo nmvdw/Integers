@@ -61,9 +61,5 @@ TypeHomot/type_homot.v
 TypeHomot/polynomials.v
 TypeHomot/endpoints.v
 TypeHomot/homotopies.v
-TypeWildCat/TypeWildCat.v
-TypeWildCat/polynomials.v
-TypeWildCat/endpoints.v
-TypeWildCat/homotopiesUnit.v
 
 Zb_Zh_sig.v
