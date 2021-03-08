@@ -12,7 +12,6 @@ Categories/point_constructors.v
 Categories/Zh_paths.v
 
 Prebicategories/TypePrebicat.v
-Prebicategories/EndOneTypes.v
 Prebicategories/DispPrebicat.v
 Prebicategories/PointTypes.v
 Prebicategories/PointTypesHomot.v
