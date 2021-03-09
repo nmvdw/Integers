@@ -16,7 +16,7 @@ Require Import sem.algebra.one_types_homotopies.
 Require Import sem.displayed_algebras.displayed_algebra.
 Require Import sem.displayed_algebras.globe_over_lem.
  *)
-
+Require Import  Integers.TypeHomot.homotopies.
 
 (** Zb **)
 Definition Zb_point_constr : poly_code
@@ -53,6 +53,7 @@ Proof.
   - intro j; induction j.
 Defined.
 
+Check (hit_algebra_type Zb_signature).
 
 (** Zh  **)
 
@@ -76,8 +77,8 @@ Definition pred
 Definition Zh_paths_lhs (j : Zh_paths) : endpoint Zh_point_constr (Zh_paths_args j) I.
 Proof.
   induction j.
-  - exact (comp pred succ).
   - exact (comp succ pred).
+  - exact (comp pred succ).
 Defined.
 
 Definition Zh_paths_rhs (j : Zh_paths) : endpoint Zh_point_constr (Zh_paths_args j) I
@@ -108,7 +109,7 @@ Definition Zh_homots_point_lhs
   := trans_e
        (trans_e
           (inv_e (comp_assoc _ _ _))
-          (path_constr sech succ))
+          (path_constr reth succ))
        (comp_id_r _).
   
 Definition Zh_homots_point_rhs
@@ -123,7 +124,7 @@ Definition Zh_homots_point_rhs
   := trans_e
        (ap_e succ (trans_e
                      (inv_e (comp_id_l _))
-                     (path_constr reth (id_e _ _))))
+                     (path_constr sech (id_e _ _))))
        (trans_e
           (inv_e (comp_assoc _ _ _))
           (trans_e
@@ -149,3 +150,4 @@ Proof.
   - exact Zh_homots_point_rhs.
 Defined.
 
+Check (hit_algebra_type Zh_signature).
