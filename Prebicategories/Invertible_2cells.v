@@ -9,7 +9,7 @@ Require Import UniMath.Bicategories.Core.Unitors.
 Local Open Scope bicategory_scope.
 Local Open Scope cat.
 
-Require Import Integers.Prebicategories.DispPrebicat.
+(*Require Import Integers.Prebicategories.DispPrebicat.*)
 Require Import Integers.Prebicategories.Prebicat.
 
 

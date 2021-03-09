@@ -11,7 +11,7 @@ Require Import UniMath.Bicategories.Core.Examples.OpCellBicat.
 Local Open Scope bicategory_scope.
 Local Open Scope cat.
 
-Require Import Integers.Prebicategories.DispPrebicat.
+(*Require Import Integers.Prebicategories.DispPrebicat.*)
 Require Import Integers.Prebicategories.Prebicat.
 Require Import Integers.Prebicategories.Invertible_2cells.
 

@@ -11,15 +11,7 @@ Categories/total_precat.v
 Categories/point_constructors.v
 Categories/Zh_paths.v
 
-Prebicategories/TypePrebicat.v
 Prebicategories/DispPrebicat.v
-Prebicategories/PointTypes.v
-Prebicategories/PointTypesHomot.v
-Prebicategories/EndTypes.v
-Prebicategories/EndTypesHomot.v
-Prebicategories/DispProd.v
-Prebicategories/ZbPaths.v
-
 Prebicategories/Prebicat.v
 Prebicategories/Invertible_2cells.v
 Prebicategories/Unitors.v

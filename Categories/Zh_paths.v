@@ -1,3 +1,7 @@
+(*
+ - The precategory `TYPE2` of types with a point and two endomorphisms, corresponding with zero, successor and predecessor.
+ - An attempt to add the path constructor 'sec' to this. Only the data are added.
+*)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 
@@ -10,14 +14,10 @@ Require Import Integers.Categories.total_precat.
 Require Import Integers.Categories.point_constructors.
 
 Local Open Scope cat.
-
 Local Open Scope mor_disp.
 
 
-(** ℤh **)
-(**
-Precategory with an added point and two endomorphisms
-  *)
+(** Precategory with an added point and two endomorphisms *)
 Definition disp2 : disp_precat type_precat.
 Proof.
   apply dirprod_disp_precat.
@@ -27,12 +27,7 @@ Defined.
 
 Definition TYPE2 : precategory := total_precategory disp2.
 
-(** WIP
-Adding the first coherency
- *)
-(* morfismen in _end zijn omgedraaid, maar nog niet hier *)
-
-
+(** An attempt to add the type of 'sec' as displayed objects. **)
 Definition disp_sec_h_data : disp_cat_data TYPE2.
 Proof.
   use tpair.

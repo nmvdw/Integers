@@ -9,7 +9,7 @@ Require Import UniMath.Bicategories.Core.Invertible_2cells.
 Local Open Scope bicategory_scope.
 Local Open Scope cat.
 
-Require Import Integers.Prebicategories.DispPrebicat.
+(*Require Import Integers.Prebicategories.DispPrebicat.*)
 Require Import Integers.Prebicategories.Prebicat.
 Require Import Integers.Prebicategories.Invertible_2cells.
 Require Import Integers.Prebicategories.Unitors.
