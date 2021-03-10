@@ -22,6 +22,18 @@ Require Import  Integers.TypeHomot.homotopies.
 Definition Zb_point_constr : poly_code
   := (C unit_one_type + I) + (I + I).
 
+Definition succb
+  : endpoint Zb_point_constr I I
+  := comp (comp (ι₂ _ _) (ι₁ _ _)) constr.
+
+Definition pred₁
+  : endpoint Zb_point_constr I I
+  := comp (comp (ι₁ _ _) (ι₂ _ _)) constr.
+
+Definition pred₂
+  : endpoint Zb_point_constr I I
+  := comp (comp (ι₂ _ _) (ι₂ _ _)) constr.
+
 Inductive Zb_paths : UU :=
 | sec : Zb_paths
 | ret : Zb_paths.
@@ -30,15 +42,15 @@ Inductive Zb_homots : UU := .
 
 Definition Zb_signature : hit_signature.
 Proof.
-  simple refine (_ ,, _ ,, _ ,, _ ,, _ ,, _ ,, _ ,, _ ,, _ ,, _  ,, _ ,, _ ,, _ ,, _).
+  repeat simple refine (_ ,, _).
   - exact Zb_point_constr.
   - exact Zb_paths.
   - intro j; induction j.
     + exact I.
     + exact I.
   - intro j; induction j.
-    + exact (comp (comp (ι₁ _ _) (comp (ι₂ _ _) constr)) (comp (ι₂ _ _) (comp (ι₁ _ _) constr))).
-    + exact (comp (comp (ι₂ _ _) (comp (ι₁ _ _) constr)) (comp (ι₂ _ _) (comp (ι₂ _ _) constr))).
+    + exact (comp succb pred₁).
+    + exact (comp pred₂ succb).
   - intro j; induction j.
     + exact (id_e _ _).
     + exact (id_e _ _).
@@ -98,21 +110,6 @@ Definition Zh_homots_point_right_endpoint (j : Zh_homots)
   := succ.
 
 Definition Zh_homots_point_lhs
-           (j : Zh_homots)
-  : homot_endpoint
-      Zh_paths_lhs
-      Zh_paths_rhs
-      (c (Zh_homots_point_arg j) (tt : unit_one_type))
-      (c (Zh_homots_point_arg j) (tt : unit_one_type))
-      (Zh_homots_point_left_endpoint j)
-      (Zh_homots_point_right_endpoint j)
-  := trans_e
-       (trans_e
-          (inv_e (comp_assoc _ _ _))
-          (path_constr reth succ))
-       (comp_id_r _).
-  
-Definition Zh_homots_point_rhs
            (i : Zh_homots)
   : homot_endpoint
       Zh_paths_lhs
@@ -130,10 +127,27 @@ Definition Zh_homots_point_rhs
           (trans_e
              (comp_id_l _)
              (comp_id_l _))).
+
+Definition Zh_homots_point_rhs
+           (j : Zh_homots)
+  : homot_endpoint
+      Zh_paths_lhs
+      Zh_paths_rhs
+      (c (Zh_homots_point_arg j) (tt : unit_one_type))
+      (c (Zh_homots_point_arg j) (tt : unit_one_type))
+      (Zh_homots_point_left_endpoint j)
+      (Zh_homots_point_right_endpoint j)
+  := trans_e
+       (trans_e
+          (inv_e (comp_assoc _ _ _))
+          (path_constr reth succ))
+       (comp_id_r _).
+
+
   
 Definition Zh_signature : hit_signature.
 Proof.
-  simple refine (_ ,, _ ,, _ ,, _ ,, _ ,, _ ,, _ ,, _ ,, _ ,, _  ,, _ ,, _ ,, _ ,, _).
+  repeat simple refine (_ ,, _).
   - exact Zh_point_constr.
   - exact Zh_paths.
   - exact Zh_paths_args.
