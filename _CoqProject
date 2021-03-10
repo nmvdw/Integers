@@ -12,10 +12,8 @@ Categories/point_constructors.v
 Categories/Zh_paths.v
 
 Prebicategories/DispPrebicat.v
-Prebicategories/Prebicat.v
 Prebicategories/Invertible_2cells.v
 Prebicategories/Unitors.v
-Prebicategories/BicategoryLaws.v
 Prebicategories/PseudoFunctor.v
 Prebicategories/PseudoTransformation.v
 Prebicategories/Composition.v

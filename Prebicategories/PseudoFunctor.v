@@ -1,6 +1,13 @@
-(** Pseudofunctors over precategories **)
-(* Compiled from different files in UniMath/Bicategories, mainly PseudoFunctors/Display/PseudoFunctorBicat.v and PseudoFuncgtors/PseudoFunctor.v *)
-(* UniMath defines pseudofunctors as instances of the pseudofunctor category, here they are defined directly*)
+(* 
+ - Definition of pseudofunctors
+ - Data projections
+ - Law projections
+ - Builders
+ - Derived laws
+ - Notation
+Partly from 'UniMath/Bicategories/PseudoFunctors/PseudoFunctor.v and 'UniMath/Bicategories/PseudoFunctors/Display/PseudoFunctorBicat.v'.
+UniMath defines pseudofunctors as objects of the pseudofunctor bicategory, here they are defined directly. *)
+
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
@@ -9,14 +16,14 @@ Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
 Require Import UniMath.Bicategories.Core.Examples.OneTypes.
 Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
-(*Require Import Integers.Prebicategories.TypePrebicat.
-Require Import Integers.Prebicategories.DispPrebicat.*)
 Require Import Integers.Prebicategories.Invertible_2cells.
 
 Local Open Scope cat.
 Local Open Scope mor_disp_scope.
 Local Open Scope bicategory_scope.
-  
+
+(** Pseudofunctor data **)
+
 Definition pseudofunctor_data (C D : prebicat) : UU.
 Proof.
   use total2.
@@ -32,6 +39,7 @@ Defined.
 
 
 (** Data projections **)
+
 Definition F₀ {C D : prebicat} (F : pseudofunctor_data C D) : C → D
   := pr11 F.
 
@@ -49,31 +57,20 @@ Definition Fcomp {C D : prebicat} (F : pseudofunctor_data C D) {a b c : C} (f : 
   : F₁ F f · F₁ F g ==> F₁ F (f · g)
   := pr222 F a b c f g.
 
-(* F on objects are functions *)
+(** Notation **)
+
 Coercion F₀ : pseudofunctor_data >-> Funclass.
-(*Local Notation "'#'" := F₁.*)
+(*Local Notation "'#'" := F₁.*) (* We can already use the notation `# F` from functors *)
 Local Notation "'##'" := F₂.
-(* We can use # F from functors *)
+
 Coercion functor_data_from_pseudofunctor_ob_mor_cell
          {C D : prebicat}
          (F : pseudofunctor_data C D)
   : functor_data C D
       := pr1 F.
 
-Definition make_pseudofunctor_data
-           {C D : prebicat}
-           (F₀ : C → D)
-           (F₁ : ∏ {a b : C}, a --> b → F₀ a --> F₀ b)
-           (F₂ : ∏ {a b : C} {f g : a --> b}, f ==> g → F₁ f ==> F₁ g)
-           (Fid : ∏ (a : C), identity (F₀ a) ==> F₁ (identity a))
-           (Fcomp : (∏ (a b c : C) (f : a --> b) (g : b --> c),
-                     F₁ f · F₁ g ==> F₁ (f · g)))
-  : pseudofunctor_data C D.
-Proof.
-  exact ((F₀ ,, F₁) ,, (F₂ ,, Fid ,, Fcomp)).
-Defined.
-
 (** Laws **)
+
 Section FunctorLaws.
   Context {C D : prebicat}.
   Variable (F : pseudofunctor_data C D).
@@ -140,20 +137,30 @@ Section FunctorLaws.
 
     Definition is_pseudofunctor : UU
       := pseudofunctor_laws × pseudofunctor_invertible_cells.
-
-(*    Definition is_pseudofunctor_isaprop : isaprop is_pseudofunctor.
-    Proof.
-        repeat (apply isapropdirprod) ; repeat (apply impred ; intro)
-        ; try (apply D) ; try (apply isaprop_is_invertible_2cell).
-     Defined.
-*)
 End FunctorLaws.
 
+(** The pseudofunctor **)
 Definition pseudofunctor (C D : prebicat) : UU.
 Proof.
   use total2.
   - exact (pseudofunctor_data C D).
   - exact is_pseudofunctor.
+Defined.
+
+
+(** Builders **)
+
+Definition make_pseudofunctor_data
+           {C D : prebicat}
+           (F₀ : C → D)
+           (F₁ : ∏ {a b : C}, a --> b → F₀ a --> F₀ b)
+           (F₂ : ∏ {a b : C} {f g : a --> b}, f ==> g → F₁ f ==> F₁ g)
+           (Fid : ∏ (a : C), identity (F₀ a) ==> F₁ (identity a))
+           (Fcomp : (∏ (a b c : C) (f : a --> b) (g : b --> c),
+                     F₁ f · F₁ g ==> F₁ (f · g)))
+  : pseudofunctor_data C D.
+Proof.
+  exact ((F₀ ,, F₁) ,, (F₂ ,, Fid ,, Fcomp)).
 Defined.
 
 Definition make_pseudofunctor
@@ -201,6 +208,7 @@ Proof.
   apply F.
 Defined.
 
+(** Law projections **)
 Section Projection.
   Context {C D : prebicat}.
   Variable (F : pseudofunctor C D).
@@ -258,8 +266,8 @@ Section Projection.
     := pr222 (pr222 (pr12 F)).
 End Projection.
 
-(** Isos are preserved *)
-Definition pseudofunctor_is_iso
+(** Invertible 2-cells are preserved *)
+Definition pseudofunctor_is_iso2
            {C D : prebicat}
            (F : pseudofunctor C D)
            {a b : C}
@@ -282,10 +290,32 @@ Proof.
         apply (!vcomp_linv α).
 Defined.
 
+(** Derived laws **)
 Section PseudoFunctorDerivedLaws.
   Context {C D : prebicat}.
   Variable (F : pseudofunctor C D).
-
+  
+  Definition pseudofunctor_is_iso
+             {a b : C}
+             {f g : a --> b}
+             (α : invertible_2cell f g)
+    : is_invertible_2cell (##F α).
+  Proof.
+    use tpair.
+    - exact (##F (α^-1)).
+    - split; cbn.
+      + rewrite <- pseudofunctor_vcomp.
+        refine (!(_  @ _)).
+        * apply (!pseudofunctor_id2 F f).
+        * apply maponpaths.
+          apply (!vcomp_rinv α).
+      + rewrite <- pseudofunctor_vcomp.
+      refine (!(_ @ _)).
+        * apply (!pseudofunctor_id2 F g).
+        * apply maponpaths.
+          apply (!vcomp_linv α).
+  Defined.
+  
   Definition pseudofunctor_linvunitor
              {a b : C}
              (f : a --> b)
@@ -302,7 +332,7 @@ Section PseudoFunctorDerivedLaws.
     cbn.
     use vcomp_move_R_Mp.
     {
-      refine (pseudofunctor_is_iso F (linvunitor f ,, _)).
+      refine (pseudofunctor_is_iso (linvunitor f ,, _)).
       is_iso.
     }
     cbn.
@@ -324,7 +354,7 @@ Section PseudoFunctorDerivedLaws.
     cbn.
     use vcomp_move_R_Mp.
     {
-      refine (pseudofunctor_is_iso F (rinvunitor f ,, _)).
+      refine (pseudofunctor_is_iso (rinvunitor f ,, _)).
       is_iso.
     }
     cbn.
@@ -349,7 +379,7 @@ Section PseudoFunctorDerivedLaws.
     cbn.
     rewrite !vassocr.
     use vcomp_move_R_Mp.
-    { refine (pseudofunctor_is_iso F (rassociator f g h ,, _)).
+    { refine (pseudofunctor_is_iso (rassociator f g h ,, _)).
       is_iso.
     }
     cbn.
@@ -469,12 +499,11 @@ Section PseudoFunctorLocalFunctor.
   Defined.
 End PseudoFunctorLocalFunctor.
 
+(** Notation **)
 Module Notations.
   Notation "'#'" := (F₁).
   Notation "'##'" := (F₂).
 End Notations.
-
-(* Use styles of UM/Bi/PF/PseudoFunctor.v, Integers/Bi/DispPrebicat.v and UM/Core/Functors.v *)
 
 
   

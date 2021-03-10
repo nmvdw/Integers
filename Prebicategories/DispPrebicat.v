@@ -1,5 +1,12 @@
-(** Displayed prebicategories are displayed bicategories over prebicategories, with general types (not sets) as displayed 2-cells **)
-(** Copied from UniMath/Bicategories/DisplayedBicats/DispBicat.v **)
+(*
+ - Displayed prebicategories
+   - Operations
+   - Data projections
+   - Laws
+   - Law projections
+ - Total prebicategories
+From UniMath/Bicategories/DisplayedBicats/DispBicat.v
+*)
 
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
@@ -11,6 +18,8 @@ Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
 Local Open Scope cat.
 Local Open Scope mor_disp_scope.
+
+(** Operations on prebicategories **)
 
 Section disp_prebicat.
 
@@ -62,9 +71,7 @@ Coercion disp_prebicat_ops_from_disp_prebicat_data (D : disp_prebicat_data)
   : disp_prebicat_ops' D
   := pr2 D.
 
-(* ----------------------------------------------------------------------------------- *)
-(** ** Data projections                                                                *)
-(* ----------------------------------------------------------------------------------- *)
+(** Data projections **)
 
 Section disp_prebicat_ops_projections.
 
@@ -139,6 +146,7 @@ Local Notation "rr •• ss" := (disp_vcomp2 rr ss) (at level 60).
 Local Notation "ff ◃◃ rr" := (disp_lwhisker ff rr) (at level 60).
 Local Notation "rr ▹▹ gg" := (disp_rwhisker gg rr) (at level 60).
 
+(** Displayed laws **)
 Section disp_prebicat_laws.
 
 Context (D : disp_prebicat_data).
@@ -302,10 +310,6 @@ Definition disp_lassociator_lassociator_law : UU
      transportb (λ α, _ ==>[α] _) (lassociator_lassociator _ _ _ _)
                 (disp_lassociator ff gg _ •• disp_lassociator _ _ _).
 
-(* ----------------------------------------------------------------------------------- *)
-(** ** Laws                                                                            *)
-(* ----------------------------------------------------------------------------------- *)
-
 Definition disp_prebicat_laws : UU
   :=   disp_id2_left_law
      × disp_id2_right_law
@@ -331,10 +335,7 @@ Definition disp_prebicat_laws : UU
 
 End disp_prebicat_laws.
 
-
-(* ----------------------------------------------------------------------------------- *)
-(** Laws projections                                                                   *)
-(* ----------------------------------------------------------------------------------- *)
+(** Laws projections **)
 
 Definition disp_prebicat : UU
   := ∑ D : disp_prebicat_data, disp_prebicat_laws D.
@@ -541,10 +542,7 @@ Definition disp_lassociator_lassociator {a b c d e: C} {f : C⟦a,b⟧} {g : C�
 End disp_prebicat_law_projections.
 
 
-
-(* ----------------------------------------------------------------------------------- *)
-(** ** Total bicategory of a displayed bicategory                                      *)
-(* ----------------------------------------------------------------------------------- *)
+(** Total prebicategory of a displayed prebicategory **)
 
 Section total_prebicat.
 
@@ -664,7 +662,7 @@ Arguments disp_prebicat_data _ : clear implicits.
 Arguments disp_prebicat _ : clear implicits.
 Arguments disp_bicat _ : clear implicits.
 
-
+(** Notations **)
 Module Notations.
 
 Export Bicat.Notations.

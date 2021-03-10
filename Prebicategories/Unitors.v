@@ -1,4 +1,6 @@
-(* Copy of UM/Bi/Core/Unitors.v *)
+(* 
+ - Lemmas concerning the left and right unitors of prebicategories.
+From 'UniMath/Bicategories/Core/Unitors.v' *)
 
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
@@ -11,31 +13,24 @@ Require Import UniMath.Bicategories.Core.Examples.OpCellBicat.
 Local Open Scope bicategory_scope.
 Local Open Scope cat.
 
-(*Require Import Integers.Prebicategories.DispPrebicat.*)
-Require Import Integers.Prebicategories.Prebicat.
 Require Import Integers.Prebicategories.Invertible_2cells.
 
 Section unitors.
 
 Context {C : prebicat}.
 
-(** The triangle with "?" in the proof of the Proposition *)
-
 Lemma runitor_rwhisker_rwhisker {a b c d: C} (f : C⟦a, b⟧)
       (g : C⟦b, c⟧) (h : C⟦c, d⟧)
   : (rassociator f g (identity c) ▹ h) • ((f ◃ runitor g) ▹ h) =
     runitor (f · g) ▹ h.
 Proof.
-  (** rewrite with uppler left triangle *)
   apply pathsinv0.
   etrans.
   { apply pathsinv0. apply lunitor_lwhisker. }
 
-  (** attach rassociator on both sides *)
   apply (vcomp_rcancel (rassociator _ _ _ )).
   { apply is_invertible_2cell_rassociator. }
 
-  (** rewrite upper right square *)
   etrans.
   { apply vassocl. }
   etrans.
@@ -43,7 +38,6 @@ Proof.
     apply pathsinv0, lwhisker_lwhisker_rassociator.
   }
 
-  (** rewrite lower middle square *)
   apply pathsinv0.
   etrans. { apply vassocl. }
   etrans.
@@ -51,20 +45,17 @@ Proof.
     apply pathsinv0, rwhisker_lwhisker_rassociator.
   }
 
-  (** rewrite lower right triangle *)
   etrans.
   { do 3 apply maponpaths.
     apply pathsinv0.
     apply lunitor_lwhisker.
   }
 
-  (** distribute the whiskering *)
   etrans.
   { do 2 apply maponpaths.
     apply pathsinv0, lwhisker_vcomp.
   }
 
-  (** remove trailing lunitor *)
   etrans. { apply vassocr. }
   etrans. { apply vassocr. }
 
@@ -72,7 +63,6 @@ Proof.
   etrans. { apply vassocr. }
   apply maponpaths_2.
 
-  (** turn the rassociators into lassociators *)
   use inv_cell_eq.
   - use is_invertible_2cell_vcomp.
     + apply is_invertible_2cell_rassociator.
@@ -114,8 +104,7 @@ Proof.
     apply maponpaths_2. apply H.
 Qed.
 
-(** The first triangle in the Proposition *)
-(** a · (1 ⊗ r) = r *)
+(** α · (1 ⊗ ρ) = ρ *)
 Lemma runitor_triangle {a b c: C} (f : C⟦a, b⟧) (g : C⟦b, c⟧)
   : rassociator f g (identity c) • (f ◃ runitor g) = runitor (f · g).
 Proof.
@@ -124,9 +113,7 @@ Proof.
   apply pathsinv0, rwhisker_vcomp.
 Qed.
 
-(** The square in the Proposition *)
-
-(** r = r ⊗ 1 *)
+(* ρ = ρ ⊗ 1 *)
 Lemma runitor_is_runitor_rwhisker (a : C)
   : runitor (identity a · identity a) = runitor (identity a) ▹ (identity a).
 Proof.
@@ -135,7 +122,7 @@ Proof.
   - apply pathsinv0. apply vcomp_runitor .
 Qed.
 
-(** l = 1 ⊗ l *)
+(* λ = 1 ⊗ λ *)
 Lemma lunitor_is_lunitor_lwhisker (a : C)
   : lunitor (identity a · identity a) = identity a ◃ lunitor (identity a).
 Proof.
@@ -144,7 +131,7 @@ Proof.
   - apply pathsinv0. apply vcomp_lunitor .
 Qed.
 
-(**  1 ⊗ r = 1 ⊗ l *)
+(*  1 ⊗ ρ = 1 ⊗ λ *)
 Lemma lwhisker_runitor_lunitor (a : C)
   : identity a  ◃ runitor (identity a) = identity a ◃ lunitor (identity a).
 Proof.
@@ -173,10 +160,8 @@ Qed.
 
 End unitors.
 
-(* ----------------------------------------------------------------------------------- *)
-(** ** Examples of laws derived by reversing morphisms or cells.                       *)
-(* ----------------------------------------------------------------------------------- *)
 
+(** Examples of laws derived by reversing morphisms or cells.  **)
 Definition rinvunitor_triangle (C : prebicat) (a b c : C) (f : C⟦a,b⟧) (g : C⟦b,c⟧)
   : (f ◃ rinvunitor g) • lassociator f g (identity c) = rinvunitor (f · g)
   := runitor_triangle (C := op2_prebicat C) f g.

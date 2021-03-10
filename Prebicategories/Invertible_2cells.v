@@ -1,4 +1,7 @@
-(* Copy of UM/Bi/Core/Ivertible_2cells.v *)
+(*
+ - Lemmas concerning invertible 2-cells
+ - Invertibility tactic
+From 'UniMath/Bicategories/Core/Invertible_2cells.v' *)
 
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
@@ -9,11 +12,7 @@ Require Import UniMath.Bicategories.Core.Unitors.
 Local Open Scope bicategory_scope.
 Local Open Scope cat.
 
-(*Require Import Integers.Prebicategories.DispPrebicat.*)
-Require Import Integers.Prebicategories.Prebicat.
-
-
-(** ** Two-cells that are isomorphisms **)
+(** Two-cells that are invertible **)
 
 Definition pentagon
            {C : prebicat}
@@ -60,8 +59,6 @@ Definition bc_whisker_l
   : (g ∘ f₁) ==> (g ∘ f₂)
   := id₂ g ⋆⋆ α.
 
-(* Notation "g '◅' α" := (bc_whisker_l g α) (at level 40) : bicategory_scope. *)
-
 Definition bc_whisker_l_id₂
            {C : prebicat}
            {X Y Z : C}
@@ -80,8 +77,6 @@ Definition bc_whisker_r
            (f : C⟦X,Y⟧)
   : (g₁ ∘ f) ==> (g₂ ∘ f)
   := β ⋆⋆ id₂ f.
-
-(* Notation "β '▻' f" := (bc_whisker_r β f) (at level 40) : bicategory_scope. *)
 
 Definition bc_whisker_r_id₂
            {C : prebicat}
@@ -102,7 +97,7 @@ Proof.
   apply idpath.
 Qed.
 
-(**** Properties of isomorphisms ***)
+(** Properties of invertible 2-cells **)
 
 Definition vcomp_move_L_Vp
            {C : prebicat}
@@ -175,7 +170,7 @@ Definition vcomp_move_L_Mp
            (η₁ : f ==> h) (η₂ : f ==> g) (ε : g ==> h)
            (Hε : is_invertible_2cell ε)
   : Hε^-1 o η₁ = η₂ -> η₁ = ε o η₂.
-Proof.
+Proof.  
   intros ?.
   rewrite <- (id2_right η₁).
   rewrite <- (vcomp_linv Hε).
@@ -219,6 +214,8 @@ Proof.
   apply vcomp_rinv.
 Defined.
 
+(** Invertibility tactic **)
+
 Ltac is_iso :=
   match goal with
   | [ |- is_invertible_2cell (runitor _) ] => apply is_invertible_2cell_runitor
@@ -237,3 +234,14 @@ Ltac is_iso :=
   | _ => try assumption
   end.
 
+(** Equal inverses give equal 2-cells **)
+(* From 'UniMath/Bicategories/Core/Bicat.v' *)
+Lemma inv_cell_eq {C : prebicat} {a b : C} {f g : C ⟦a, b⟧} (x y : f ==> g)
+      (inv_x : is_invertible_2cell x) (inv_y : is_invertible_2cell y)
+      (p : inv_x^-1 = inv_y^-1)
+  : x = y.
+Proof.
+  apply (vcomp_rcancel _ (is_invertible_2cell_inv inv_x)).
+  rewrite vcomp_rinv, p.
+  apply (!vcomp_rinv _).
+Defined.

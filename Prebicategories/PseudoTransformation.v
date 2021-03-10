@@ -1,5 +1,6 @@
 (** Pseudotransformations between pseudofunctors over precategories **)
-(* Copied from UniMath/Bicategories/Transformations/PseudoTransformation.v *)
+
+(*From UniMath/Bicategories/Transformations/PseudoTransformation.v *)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
@@ -8,8 +9,6 @@ Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
 Require Import UniMath.Bicategories.Core.Examples.OneTypes.
 Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
-(*Require Import Integers.Prebicategories.TypePrebicat.
-Require Import Integers.Prebicategories.DispPrebicat.*)
 Require Import Integers.Prebicategories.Invertible_2cells.
 Require Import Integers.Prebicategories.PseudoFunctor.
 Import PseudoFunctor.Notations.
@@ -267,122 +266,4 @@ Proof.
   rewrite !vassocl.
   reflexivity.
 Qed.
-
-(* unfinished *)
-Definition id_pseudotrans
-           {C D : prebicat}
-           (F : pseudofunctor C D)
-  : pseudotrans F F.
-Proof.
-  use make_pseudotrans.
-  - use make_pseudotrans_data.
-    + intro a.
-      apply identity.
-    + intros a b f.
-      unfold invertible_2cell.
-      exists ((pseudofunctor_id F a ▹ #F f) • pseudofunctor_comp F (identity a) f • ##F (lunitor f • rinvunitor f) • (pseudofunctor_comp F f (identity b))^-1 • (#F f ◃ (pseudofunctor_id F b)^-1)).
-
-      is_iso.
-      * unfold is_invertible_2cell.
-        exists ((pseudofunctor_id F a)^-1).
-        split.
-        -- apply vcomp_rinv.
-        -- apply vcomp_linv.
-      * unfold is_invertible_2cell.
-        exists ((pseudofunctor_comp F (id₁ a) f)^-1).
-        split.
-        -- apply vcomp_rinv.
-        -- apply vcomp_linv.
-      * use tpair.
-        -- exact (##F (runitor f • linvunitor f)).
-        -- split.
-           ++ refine (_ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _).
-              ** apply maponpaths.
-                 apply pseudofunctor_vcomp.
-              ** apply maponpaths_2.
-                 apply pseudofunctor_vcomp.
-              ** apply vassocr.
-              ** apply maponpaths_2.
-                 apply vassocl.
-              ** apply maponpaths_2.
-                 apply maponpaths.
-                 apply (!pseudofunctor_vcomp _ _ _).
-              ** apply maponpaths_2.
-                 apply maponpaths.
-                 apply maponpaths.
-                 apply rinvunitor_runitor.
-              ** apply maponpaths_2.
-                 apply (!pseudofunctor_vcomp _ _ _ ).
-              ** apply maponpaths_2.
-                 apply maponpaths.
-                 apply id2_right.
-              ** apply (!pseudofunctor_vcomp _ _ _).
-              ** apply maponpaths.
-                 apply lunitor_linvunitor.
-              ** apply pseudofunctor_id2.
-           ++ refine (_ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _ @ _).
-              ** apply maponpaths.
-                 apply pseudofunctor_vcomp.
-              ** apply maponpaths_2.
-                 apply pseudofunctor_vcomp.
-              ** apply vassocr.
-              ** apply maponpaths_2.
-                 apply vassocl.
-              ** apply maponpaths_2.
-                 apply maponpaths.
-                 apply (!pseudofunctor_vcomp _ _ _).
-              ** apply maponpaths_2.
-                 apply maponpaths.
-                 apply maponpaths.
-                 apply linvunitor_lunitor.
-              ** apply maponpaths_2.
-                 apply (!pseudofunctor_vcomp _ _ _ ).
-              ** apply maponpaths_2.
-                 apply maponpaths.
-                 apply id2_right.
-              ** apply (!pseudofunctor_vcomp _ _ _).
-              ** apply maponpaths.
-                 apply runitor_rinvunitor.
-              ** apply pseudofunctor_id2.
-  - split.
-    + unfold pseudotrans_id_law.
-      intros. cbn.
-Abort.
-(*
-                := id₁ F.
- *)
-
-(* unfinished *)
-Definition comp_pstrans
-           {C D : prebicat}
-           {F G H : pseudofunctor C D}
-           (η : pseudotrans F G) (σ : pseudotrans G H)
-  : pseudotrans F H.
-Proof.
-  use tpair.
-  - use tpair.
-    + intro a.
-      apply (η a · σ a).
-    + cbn.
-      intros a b f.
-      unfold invertible_2cell.
-      exists (rassociator _ _ _ • (η a ◃ $σ f) • lassociator _ _ _ • ($η f ▹ σ b) • rassociator _ _ _).
-      is_iso.
-      * unfold is_invertible_2cell.
-        exists (($σ f)^-1).
-        split.
-        -- apply vcomp_rinv.
-        -- apply vcomp_linv.
-      * unfold is_invertible_2cell.
-        exists (($η f)^-1).
-        split.
-        -- apply vcomp_rinv.
-        -- apply vcomp_linv.
-  - unfold is_pseudotrans.
-    split.
-    + unfold pseudotrans_id_law.
-      intro a. cbn.
-Abort.
-
-(* pseudotrans on data *)
 

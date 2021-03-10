@@ -13,7 +13,7 @@ Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 (*Require Import Integers.Prebicategories.TypePrebicat.*)
 Require Import Integers.Prebicategories.Invertible_2cells.
 Require Import Integers.Prebicategories.Unitors.
-Require Import Integers.Prebicategories.BicategoryLaws.
+(*Require Import Integers.Prebicategories.BicategoryLaws.*)
 Require Import Integers.Prebicategories.PseudoFunctor.
 Import PseudoFunctor.Notations.
 Require Import Integers.Prebicategories.DispPrebicat.
