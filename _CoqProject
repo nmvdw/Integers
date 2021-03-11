@@ -19,11 +19,10 @@ Prebicategories/PseudoTransformation.v
 Prebicategories/Composition.v
 Prebicategories/Projection.v
 
-Prebicategories/AddEndpoints.v
 Prebicategories/Algebra.v
+Prebicategories/AddEndpoints.v
 Prebicategories/DispDepProd.v
 Prebicategories/FullSub.v
-Prebicategories/TypesUnitBicat.v
 
 TypeHomot/type_homot.v
 TypeHomot/polynomials.v

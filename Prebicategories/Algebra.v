@@ -1,29 +1,20 @@
-(* Given a prebicategory C and a pseudofunctor F : C -> C, define a prebicategory of F-algebras *)
-(* conform  'Constructing Higher ...', Example 2.9 *)
-(* Using `unit` as 2-cells *)
-(* From UniMath/Bicategories/DisplayedBicats/Examples/Algebras.v *)
+(*
+ - Definition of the displayed prebicategory of F-algebras (DFalg)
+ - The type of 2-cells is `unit`
+From 'UniMath/Bicategories/DisplayedBicats/Examples/Algebras.v' *)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.Core.Functors.
 Require Import UniMath.CategoryTheory.DisplayedCats.Core.
 Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
-Require Import UniMath.Bicategories.Core.Examples.OneTypes.
 Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
-(*Require Import Integers.Prebicategories.TypePrebicat.*)
 Require Import Integers.Prebicategories.Invertible_2cells.
-Require Import Integers.Prebicategories.Unitors.
-(*Require Import Integers.Prebicategories.BicategoryLaws.*)
 Require Import Integers.Prebicategories.PseudoFunctor.
 Import PseudoFunctor.Notations.
 Require Import Integers.Prebicategories.DispPrebicat.
 Import DispPrebicat.Notations.
-
-Require Import Integers.Prebicategories.PseudoTransformation.
-Require Import Integers.Prebicategories.Composition.
-Require Import Integers.Prebicategories.Projection.
-
 
 Local Open Scope cat.
 Section Algebra.
@@ -81,6 +72,7 @@ Section Algebra.
     repeat split; intro; intros; apply isapropunit.
   Qed.
 
+  (* DFalg *)
   Definition disp_alg_prebicat : disp_prebicat C
     := (_ ,, disp_alg_ops_laws).
 

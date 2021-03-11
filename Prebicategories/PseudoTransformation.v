@@ -1,22 +1,26 @@
-(** Pseudotransformations between pseudofunctors over precategories **)
-
-(*From UniMath/Bicategories/Transformations/PseudoTransformation.v *)
+(**
+ - Definition of pseudotransformations between pseudofunctors over precategories 
+ - Data projections
+ - Law projections
+ - Builders
+ - Derived laws
+ - Notation
+From 'UniMath/Bicategories/Transformations/PseudoTransformation.v'
+ *)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.Core.Functors.
 Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
-Require Import UniMath.Bicategories.Core.Examples.OneTypes.
-Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
 Require Import Integers.Prebicategories.Invertible_2cells.
 Require Import Integers.Prebicategories.PseudoFunctor.
 Import PseudoFunctor.Notations.
 
 Local Open Scope cat.
-Local Open Scope mor_disp_scope.
 Local Open Scope bicategory_scope.
 
+(** Pseudotransformations **)
 Definition pseudotrans_data
            {C D : prebicat}
            (F G : pseudofunctor C D)
@@ -36,7 +40,7 @@ Definition make_pseudotrans_data
   : pseudotrans_data F G
   := (η₀ ,, η₁).
 
-(* Data projections *)
+(** Projections **)
 Definition pseudotrans_objects
            {C D : prebicat}
            {F G : pseudofunctor C D}
@@ -58,6 +62,7 @@ Definition pseudotrans_morphisms
 
 Local Notation "'$'" := pseudotrans_morphisms.
 
+(** Laws **)
 Section TransLaws.
   Context {C D : prebicat}
           {F G : pseudofunctor C D}.
@@ -99,6 +104,8 @@ Proof.
   - exact (pseudotrans_data F G).
   - exact is_pseudotrans.
 Defined.
+
+(** Projections (cont) **)
 
 Definition pseudocomponent_of
            {C D : prebicat}
@@ -191,6 +198,8 @@ Definition pseudotrans_comp
       • lassociator (#F f) (#F g) (η c)
       • (pseudofunctor_comp F f g ▹ η c)
   := pr22 η.
+
+(** Derived Laws **)
 
 Definition pseudotrans_id_alt
            {C D : prebicat}

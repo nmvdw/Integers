@@ -5,7 +5,8 @@
  - Builders
  - Derived laws
  - Notation
-Partly from 'UniMath/Bicategories/PseudoFunctors/PseudoFunctor.v and 'UniMath/Bicategories/PseudoFunctors/Display/PseudoFunctorBicat.v'.
+Partly from 'UniMath/Bicategories/PseudoFunctors/PseudoFunctor.v'
+and 'UniMath/Bicategories/PseudoFunctors/Display/PseudoFunctorBicat.v'.
 UniMath defines pseudofunctors as objects of the pseudofunctor bicategory, here they are defined directly. *)
 
 Require Import UniMath.Foundations.All.
@@ -13,13 +14,10 @@ Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.Core.Functors.
 Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
-Require Import UniMath.Bicategories.Core.Examples.OneTypes.
-Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
 Require Import Integers.Prebicategories.Invertible_2cells.
 
 Local Open Scope cat.
-Local Open Scope mor_disp_scope.
 Local Open Scope bicategory_scope.
 
 (** Pseudofunctor data **)
@@ -265,30 +263,6 @@ Section Projection.
         • pseudofunctor_comp F (f · g) h
     := pr222 (pr222 (pr12 F)).
 End Projection.
-
-(** Invertible 2-cells are preserved *)
-Definition pseudofunctor_is_iso2
-           {C D : prebicat}
-           (F : pseudofunctor C D)
-           {a b : C}
-           {f g : a --> b}
-           (α : invertible_2cell f g)
-  : is_invertible_2cell (##F α).
-Proof.
-  use tpair.
-  - exact (##F (α^-1)).
-  - split; cbn.
-    + rewrite <- pseudofunctor_vcomp.
-      refine (!(_  @ _)).
-      * apply (!pseudofunctor_id2 F f).
-      * apply maponpaths.
-        apply (!vcomp_rinv α).
-    + rewrite <- pseudofunctor_vcomp.
-      refine (!(_ @ _)).
-      * apply (!pseudofunctor_id2 F g).
-      * apply maponpaths.
-        apply (!vcomp_linv α).
-Defined.
 
 (** Derived laws **)
 Section PseudoFunctorDerivedLaws.

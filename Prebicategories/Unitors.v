@@ -7,9 +7,6 @@ Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.Bicategories.Core.Bicat. Import Notations.
 Require Import UniMath.Bicategories.Core.Invertible_2cells.
-Require Import UniMath.Bicategories.Core.Unitors.
-Require Import UniMath.Bicategories.Core.Examples.OpMorBicat.
-Require Import UniMath.Bicategories.Core.Examples.OpCellBicat.
 Local Open Scope bicategory_scope.
 Local Open Scope cat.
 
@@ -159,14 +156,3 @@ Proof.
 Qed.
 
 End unitors.
-
-
-(** Examples of laws derived by reversing morphisms or cells.  **)
-Definition rinvunitor_triangle (C : prebicat) (a b c : C) (f : C⟦a,b⟧) (g : C⟦b,c⟧)
-  : (f ◃ rinvunitor g) • lassociator f g (identity c) = rinvunitor (f · g)
-  := runitor_triangle (C := op2_prebicat C) f g.
-
-Definition lunitor_triangle (C : prebicat) (a b c : C) (f : C⟦a,b⟧) (g : C⟦b,c⟧)
-  : lassociator (identity a) f g • (lunitor f ▹ g) = lunitor (f · g)
-  := runitor_triangle (C := op1_prebicat C) g f.
-

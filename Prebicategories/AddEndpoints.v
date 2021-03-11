@@ -1,18 +1,16 @@
-(* Adding endpoints using a prebicategory C *)
-(* Conform 'Bicategories in Univalent Foundations', Definition 9.12 using prebicategories, or 'Constructing Higher ...', Example 2.11, using prebicategories and T=Id. *)
+(* 
+ - Definition of 'DFcell'
+From 'UniMath/Bicategories/DisplayedBicats/Examples/Add2Cell.v'
+ *)
 
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.Core.Functors.
-(*Require Import UniMath.CategoryTheory.DisplayedCats.Core.*)
 Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
-Require Import UniMath.Bicategories.Core.Examples.OneTypes.
 Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
-(*Require Import Integers.Prebicategories.TypePrebicat.*)
 Require Import Integers.Prebicategories.DispPrebicat.
-Require Import Integers.Prebicategories.Invertible_2cells.
 Require Import Integers.Prebicategories.PseudoFunctor.
 Import PseudoFunctor.Notations.
 Require Import Integers.Prebicategories.PseudoTransformation.
@@ -23,9 +21,7 @@ Local Open Scope cat.
 Local Open Scope mor_disp_scope.
 Local Open Scope bicategory_scope.
 
-
-(*linvunitor (l Aa) • (id₁ (S (pr1 Aa)) ◃ α)*)
-
+(** Auxiliary lemmas **)
 Lemma linvunitor_vcomp {C : prebicat} {a b : C} (f g : a --> b) (θ : f ==> g)
   : linvunitor f • (identity _ ◃ θ) = θ • linvunitor g.
 Proof.
@@ -50,10 +46,7 @@ Proof.
     apply id2_left.
 Qed.
 
-
-
-  
-(* the objects over (A, a) are 2-cells. They could also be equalities *)
+(** Definition of DFcell **)
 Section AddEndpoints.
   Context {C : prebicat}.
   Variable (D : disp_prebicat C).
@@ -194,6 +187,7 @@ Section AddEndpoints.
     repeat split; exact tt.
   Qed.
 
+  (* DFcell *)
   Definition add_path_endpoints_prebicat : disp_prebicat (total_prebicat D).
   Proof.
     use tpair.

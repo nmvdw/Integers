@@ -1,14 +1,13 @@
-(** The projection of the total prebicategory of a displayed prebicategory to the base **)
-(* Copied from UniMath/Bicategories/PseudoFunctors/Examples/Projection.v *)
+(*
+ - The projection pseudofunctor of the total prebicategory of a displayed prebicategory to its base
+From 'UniMath/Bicategories/PseudoFunctors/Examples/Projection.v'
+*)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.Core.Functors.
 Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
-Require Import UniMath.Bicategories.Core.Examples.OneTypes.
-Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
-(*Require Import Integers.Prebicategories.TypePrebicat.*)
 Require Import Integers.Prebicategories.DispPrebicat.
 Require Import Integers.Prebicategories.Invertible_2cells.
 Require Import Integers.Prebicategories.PseudoFunctor.
@@ -85,5 +84,4 @@ Section Projection.
       + intros a b c f g. cbn.
         is_iso.
   Defined.
-  
 End Projection.

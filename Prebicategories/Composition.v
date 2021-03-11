@@ -1,21 +1,19 @@
-(** Compositions of pseudofunctors over precategories **)
-(* Copied from UniMath/Bicategories/PseudoFunctors/Examples/Composition.v *)
+(*
+ - Compositions of pseudofunctors over precategories
+From 'UniMath/Bicategories/PseudoFunctors/Examples/Composition.v'
+*)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.Core.Functors.
 Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
-Require Import UniMath.Bicategories.Core.Examples.OneTypes.
-Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
-(*Require Import Integers.Prebicategories.TypePrebicat.
-Require Import Integers.Prebicategories.DispPrebicat.*)
 Require Import Integers.Prebicategories.Invertible_2cells.
 Require Import Integers.Prebicategories.PseudoFunctor.
 Import PseudoFunctor.Notations.
 
 Local Open Scope cat.
-Local Open Scope mor_disp_scope.
+(*Local Open Scope mor_disp_scope.*)
 Local Open Scope bicategory_scope.
 
 Section FunctorComposition.
@@ -198,5 +196,4 @@ Section FunctorComposition.
   Proof.
     apply idpath.
   Qed.
-
 End FunctorComposition.
