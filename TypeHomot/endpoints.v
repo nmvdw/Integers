@@ -1,13 +1,14 @@
-
+(*
+ - Definition of the pseudotransformation `endpoint_type` from a path endpoint
+From 'GrpdHITs/code/algebra/one_types_endpoints.v'
+*)
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.DisplayedCats.Core.
 Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
 Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 Require Import UniMath.Bicategories.DisplayedBicats.Examples.DisplayedCatToBicat.
-(*Require Import UniMath.Bicategories.Core.Examples.OneTypes.*)
 
-(*Require Import sem.signature.hit_signature.*)
 Require Import sem.prelude.basics.
 
 Require Import Integers.Prebicategories.DispPrebicat.
@@ -16,8 +17,8 @@ Require Import Integers.Prebicategories.PseudoTransformation.
 Require Import Integers.Prebicategories.Composition.
 Require Import Integers.Prebicategories.Projection.
 Require Import Integers.Prebicategories.Algebra.
-Require Import Integers.TypeHomot.type_homot.
 Require Import Integers.signature.
+Require Import Integers.TypeHomot.type_homot.
 Require Import Integers.TypeHomot.polynomials.
 
 
@@ -26,28 +27,15 @@ Local Open Scope bicategory_scope.
 Local Open Scope mor_disp_scope.
 
 Opaque comp_pseudofunctor.
-
+(*
 Definition endpoint_type_ob
            {A P Q : poly_code}
            (e : endpoint A P Q)
            {X : UU}
            (c : act A X → X)
   : act P X → act Q X
-  := sem_endpoint_UU e c.
-(*Proof.
-  induction e as [ | | | | | | | P T t | | ].
-  - exact (λ x, x).
-  - exact (λ x, IHe2 (IHe1 x)).
-  - exact inl.
-  - exact inr.
-  - exact pr1.
-  - exact pr2.
-  - exact (λ x, IHe1 x,, IHe2 x).
-  - exact (λ x, t).
-  - exact f.
-  - exact c.
-Defined.*)
-  
+  := sem_endpoint_UU e c.*)
+
 Definition endpoint_type_mor
            {A P Q : poly_code}
            (e : endpoint A P Q)
@@ -57,14 +45,14 @@ Definition endpoint_type_mor
            {f : X → Y}
            (ef : ((λ x, f (cX x)) ~ (λ x, cY (actmap A f x))))
            (x : act P X)
-  : actmap Q f (endpoint_type_ob e cX x)
+  : actmap Q f (sem_endpoint_UU e cX x)
     =
-    endpoint_type_ob e cY (actmap P f x).
+    sem_endpoint_UU e cY (actmap P f x).
 Proof.
   induction e as [ | | | | | | | P T t | | ].
   - exact (idpath _).
-  - exact (IHe2 (endpoint_type_ob e1 cX x)
-                @ maponpaths (endpoint_type_ob e2 cY) (IHe1 x)).
+  - exact (IHe2 (sem_endpoint_UU e1 cX x)
+                @ maponpaths (sem_endpoint_UU e2 cY) (IHe1 x)).
   - exact (idpath (inl (actmap P f x))).
   - exact (idpath (inr (actmap Q f x))).
   - exact (idpath (pr1 (actmap (P * Q) f x))).
@@ -83,7 +71,7 @@ Definition endpoint_type_data
       (comp_pseudofunctor (⦃ Q ⦄) (pr1_pseudofunctor (disp_alg_prebicat (⦃ A ⦄)))).
 Proof.
   use make_pseudotrans_data.
-  - cbn. exact (λ X, endpoint_type_ob e (pr2 X)).
+  - cbn. exact (λ X, sem_endpoint_UU e (pr2 X)).
   - cbn. intros X Y f.
     use make_invertible_2cell.
     + exact (λ x, endpoint_type_mor e (pr12 f) x).
@@ -105,21 +93,21 @@ Definition endpoint_type_natural
                  =
                  (λ x : act A X, ef x @ maponpaths cY (poly_homot A αp x)))
            (x : act P X)
-  : poly_homot Q αp (endpoint_type_ob e cX x)
+  : poly_homot Q αp (sem_endpoint_UU e cX x)
                @ endpoint_type_mor e eg x
     =
     endpoint_type_mor e ef x
-                      @ maponpaths (endpoint_type_ob e cY) (poly_homot P αp x).
+                      @ maponpaths (sem_endpoint_UU e cY) (poly_homot P αp x).
 Proof.
   induction e as [ | | | | | | | P T t | | ].
   - exact (pathscomp0rid _ @ !(maponpathsidfun _)).
   - exact (path_assoc _ _ _
-                      @ maponpaths (λ z, z @ _) (IHe2 (endpoint_type_ob e1 cX x))
+                      @ maponpaths (λ z, z @ _) (IHe2 (sem_endpoint_UU e1 cX x))
                       @ !(path_assoc _ _ _)
                       @ maponpaths
                       (λ z, _ @ z)
                       (!(maponpathscomp0 _ _ _)
-                        @ maponpaths (maponpaths (endpoint_type_ob e2 cY)) (IHe1 x)
+                        @ maponpaths (maponpaths (sem_endpoint_UU e2 cY)) (IHe1 x)
                         @ maponpathscomp0 _ _ _
                         @ maponpaths (λ z, _ @ z) (maponpathscomp _ _ _))
                       @ path_assoc _ _ _).
@@ -144,20 +132,20 @@ Definition endpoint_type_id
            {X : UU}
            (c : act A X → X)
            (x : act P X)
-  : (poly_id Q X (endpoint_type_ob e c x)
-             @ poly_homot Q (λ z, idpath z) (endpoint_type_ob e c x))
+  : (poly_id Q X (sem_endpoint_UU e c x)
+             @ poly_homot Q (λ z, idpath z) (sem_endpoint_UU e c x))
       @ endpoint_type_mor e (λ z, maponpaths c (poly_id A X z)) x
     =
-    maponpaths (endpoint_type_ob e c)
+    maponpaths (sem_endpoint_UU e c)
                (poly_id P X x @ poly_homot P (λ z, idpath z) x).
 Proof.
   induction e as [ | | | | | | | P T t | | ].
   - exact (pathscomp0rid _ @ !maponpathsidfun _).
   - exact (path_assoc _ _ _
-           @ maponpaths (λ z, z @ _) (IHe2 (endpoint_type_ob e1 c x))
+           @ maponpaths (λ z, z @ _) (IHe2 (sem_endpoint_UU e1 c x))
            @ !maponpathscomp0 _ _ _
            @ maponpaths
-               (maponpaths (endpoint_type_ob e2 c))
+               (maponpaths (sem_endpoint_UU e2 c))
                (IHe1 x)
                @ maponpathscomp _ _ _).
   - exact (pathscomp0rid _ @ !maponpathscomp0 _ _ _).
@@ -193,8 +181,8 @@ Definition endpoint_type_comp
            (f : X --> Y)
            (g : Y --> Z)
            (x : act P (pr1 X))
-  : (poly_comp Q (pr1 f) (pr1 g) (endpoint_type_ob e (pr2 X) x)
-      @ poly_homot Q (λ z, idpath (pr1 g (pr1 f z))) (endpoint_type_ob e (pr2 X) x))
+  : (poly_comp Q (pr1 f) (pr1 g) (sem_endpoint_UU e (pr2 X) x)
+      @ poly_homot Q (λ z, idpath (pr1 g (pr1 f z))) (sem_endpoint_UU e (pr2 X) x))
       @ endpoint_type_mor e
       (λ z,
        (((maponpaths (pr1 g) (pr12 f z)
@@ -207,11 +195,11 @@ Definition endpoint_type_comp
     (((maponpaths
          (actmap Q (pr1 g))
          (endpoint_type_mor e (pr12 f) x)
-      @ idpath (actmap Q (pr1 g) (endpoint_type_ob e (pr2 Y) (actmap P (pr1 f) x))))
+      @ idpath (actmap Q (pr1 g) (sem_endpoint_UU e (pr2 Y) (actmap P (pr1 f) x))))
       @ endpoint_type_mor e (pr12 g) (actmap P (pr1 f) x))
-      @ idpath (endpoint_type_ob e (pr2 Z) (actmap P (pr1 g) (actmap P (pr1 f) x))))
+      @ idpath (sem_endpoint_UU e (pr2 Z) (actmap P (pr1 g) (actmap P (pr1 f) x))))
       @ maponpaths
-         (endpoint_type_ob e (pr2 Z))
+         (sem_endpoint_UU e (pr2 Z))
          (poly_comp P (pr1 f) (pr1 g) x
                     @ poly_homot P (λ z, idpath (pr1 g (pr1 f z))) x).
 Proof.
@@ -250,7 +238,7 @@ Proof.
   - exact (pathscomp0rid _ @ !maponpathsidfun _).
   - assert (poly_comp
               R (pr1 f) (pr1 g)
-              (endpoint_type_ob e2 (pr2 X) (endpoint_type_ob e1 (pr2 X) x))
+              (sem_endpoint_UU e2 (pr2 X) (sem_endpoint_UU e1 (pr2 X) x))
             @ endpoint_type_mor e2
                 (λ x0,
                  (((maponpaths (pr1 g) ((pr12 f) x0)
@@ -259,9 +247,9 @@ Proof.
                     @ idpath (pr2 Z (actmap A (pr1 g) (actmap A (pr1 f) x0))))
             @ maponpaths
                 (pr2 Z)
-                (poly_comp A (pr1 f) (pr1 g) x0)) (endpoint_type_ob e1 (pr2 X) x)
+                (poly_comp A (pr1 f) (pr1 g) x0)) (sem_endpoint_UU e1 (pr2 X) x)
             @ maponpaths
-                (endpoint_type_ob e2 (pr2 Z))
+                (sem_endpoint_UU e2 (pr2 Z))
                 (endpoint_type_mor
                    e1
                    (λ x0,
@@ -276,18 +264,18 @@ Proof.
                (actmap R (pr1 g))
                (endpoint_type_mor
                   e2 (pr12 f)
-                  (endpoint_type_ob e1 (pr2 X) x)
+                  (sem_endpoint_UU e1 (pr2 X) x)
             @ maponpaths
-                (endpoint_type_ob e2 (pr2 Y))
+                (sem_endpoint_UU e2 (pr2 Y))
                 (endpoint_type_mor e1 (pr12 f) x))
             @ endpoint_type_mor
                 e2 (pr12 g)
-                (endpoint_type_ob e1 (pr2 Y) (actmap P (pr1 f) x))
+                (sem_endpoint_UU e1 (pr2 Y) (actmap P (pr1 f) x))
             @ maponpaths
-                (endpoint_type_ob e2 (pr2 Z))
+                (sem_endpoint_UU e2 (pr2 Z))
                 (endpoint_type_mor e1 (pr12 g) (actmap P (pr1 f) x)))
             @ maponpaths
-                (λ x0, endpoint_type_ob e2 (pr2 Z) (endpoint_type_ob e1 (pr2 Z) x0))
+                (λ x0, sem_endpoint_UU e2 (pr2 Z) (sem_endpoint_UU e1 (pr2 Z) x0))
                 (poly_comp P (pr1 f) (pr1 g) x))
       as goal.
     {
@@ -313,7 +301,7 @@ Proof.
       {
         apply maponpaths.
         etrans.
-        { exact (!maponpathscomp0 (endpoint_type_ob e2 (pr2 Z)) _ _). }
+        { exact (!maponpathscomp0 (sem_endpoint_UU e2 (pr2 Z)) _ _). }
         apply maponpaths.
         apply IHe1.
       }
