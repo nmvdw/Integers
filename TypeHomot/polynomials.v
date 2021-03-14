@@ -1,12 +1,14 @@
+(*
+ - Definition of the pseudofunctor `⦃ P ⦄` from a polynomial code `P`
+From 'GrpdHITs/code/algebra/one_types_polynomials.v'
+*)
+
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.DisplayedCats.Core.
 Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
 Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
-Require Import UniMath.Bicategories.DisplayedBicats.Examples.DisplayedCatToBicat.
-Require Import UniMath.Bicategories.Core.Examples.OneTypes.
-
-Require Import sem.signature.hit_signature.
+Require Import Integers.signature.
 
 Require Import Integers.Prebicategories.DispPrebicat.
 Require Import Integers.Prebicategories.PseudoFunctor.
@@ -16,9 +18,7 @@ Local Open Scope cat.
 Local Open Scope bicategory_scope.
 Local Open Scope mor_disp_scope.
 
-
-(** Preliminary **)
-
+(** Preliminary  definitions**)
 (* For coproduct *)
 Definition coprodf_path
            {X1 X2 Y1 Y2 : UU}
@@ -44,8 +44,6 @@ Proof.
   - exact (idpath (inr x)).
 Defined.
 
-
-
 Definition coprodf_comp
            {X1 X2 Y1 Y2 Z1 Z2 : UU}
            (f1 : X1 → Y1)
@@ -61,7 +59,6 @@ Proof.
   - exact (idpath (inl (g1 (f1 x)))).
   - exact (idpath (inr (g2 (f2 x)))).
 Defined.
-
 
 Definition coprodf_path_maponpaths_inl
            {X₁ X₂ Y₁ Y₂ : UU}
@@ -155,7 +152,6 @@ Definition dirprodf_path_concat
     dirprodf_path (homotcomp p₁ q₁) (homotcomp p₂ q₂) x
   := pathsdirprod_concat  (p₁ (pr1 x)) (q₁ (pr1 x)) (p₂ (pr2 x)) (q₂ (pr2 x)). 
 
-
 Definition maponpaths_pathsdirprod
            {X₁ X₂ Y₁ Y₂ : UU}
            (φ : X₁ → X₂)
@@ -191,16 +187,7 @@ Definition maponpaths_dirprodf_path
       (dirprodf_path p₁ p₂ x)
   := maponpaths_pathsdirprod φ χ (p₁ (pr1 x)) (p₂ (pr2 x)).
 
-(* Polynomial acts on universe *)
-Definition act (P : poly_code) (A : UU) : UU.
-Proof.
-  induction P as [X | | | ].
-  - exact X.
-  - exact A.
-  - exact (IHP1 ⨿ IHP2).
-  - exact (IHP1 × IHP2).
-Defined.
-
+(** Action of polynomials on functions **)
 Definition actmap (P : poly_code) {A B : UU} (f : A → B)
   : type_prebicat ⟦ act P A, act P B ⟧.
 Proof.
@@ -212,16 +199,16 @@ Proof.
   - exact (dirprodf IHP1 IHP2).
 Defined.
 
-
+(** `actmap` preserves composition, identity and homotopies **)
 Definition poly_comp
            (P : poly_code)
-           {X Y Z : UU}
-           (f : X → Y) (g : Y → Z)
+           {A B C : UU}
+           (f : A → B) (g : B → C)
   : actmap P g ∘ actmap P f ~ actmap P (g ∘ f)%functions.
 Proof.
-  induction P as [A | | | ].
-  - exact (λ a, idpath a).
-  - exact (λ z, idpath (g(f z))).
+  induction P as [X | | | ].
+  - exact (λ x, idpath x).
+  - exact (λ x, idpath (g(f x))).
   - intro x.
     refine (!coprodf_comp _ _ _ _ x @ _).
     exact (coprodf_path IHP1 IHP2 x).
@@ -230,31 +217,42 @@ Proof.
     exact (dirprodf_path IHP1 IHP2 x).
 Defined.
 
-(* The pseudofunctor *)
+Definition poly_id
+           (P : poly_code)
+           (A : UU)
+  : (λ x : act P A, x) ~ (actmap P (λ x : A, x)).
+Proof.
+  induction P as [X | | | ].
+  - exact (λ x, idpath x).
+  - exact (λ x, idpath x).
+  - exact (λ x, !coprodf_id x @ coprodf_path IHP1 IHP2 x).
+  - exact (λ x, !dirprodf_id x @ dirprodf_path IHP1 IHP2 x).
+Defined.
+
+Definition poly_homot
+           (P : poly_code)
+           {A B : UU}
+           {f g : A → B}
+           (p : f ~ g)
+  : actmap P f ~ actmap P g.
+Proof.
+  induction P as [X | | |].
+  - exact (λ x, idpath x).
+  - exact p.
+  - exact (coprodf_path IHP1 IHP2).
+  - exact (dirprodf_path IHP1 IHP2).
+Defined.
+
+(** The pseudofunctor **)
 Definition poly_type_data (P : poly_code)
   : pseudofunctor_data type_prebicat type_prebicat.
 Proof.
   use make_pseudofunctor_data.
   - exact (act P).
   - exact (λ A B f, actmap P f).
-  - cbn. intros A B f g p.
-    induction P as [X | | | ].
-    + exact (λ x, idpath x).
-    + exact p.
-    + exact (coprodf_path IHP1 IHP2). 
-    + exact (dirprodf_path IHP1 IHP2).
-  - cbn. intros A.
-    induction P as [X | | | ].
-    + exact (λ x, idpath _).
-    + exact (λ x, idpath _).
-    + exact (λ x, !coprodf_id x @ coprodf_path IHP1 IHP2 x).
-    + exact (λ x, !dirprodf_id x @ dirprodf_path IHP1 IHP2 x).
-  - cbn. intros A B C f g.
-    induction P as [X | | | ].
-    + exact (λ x, idpath _).
-    + exact (λ x, idpath _).
-    + exact (λ x, !coprodf_comp _ _ _ _ x @ coprodf_path IHP1 IHP2 x).
-    + exact (λ x, !dirprodf_comp _ _ _ _ x @ dirprodf_path IHP1 IHP2 x).
+  - exact (λ A B f g, poly_homot P).
+  - exact (poly_id P).
+  - exact (λ A B C, poly_comp P).
 Defined.
 
 Definition poly_type_laws (P : poly_code)
@@ -269,71 +267,71 @@ Proof.
     induction x as [x | x].
     + exact (maponpaths (maponpaths inl) (eqtohomot (IHP1 _ _ _) x)).
     + exact (maponpaths (maponpaths inr) (eqtohomot (IHP2 _ _ _) x)).
-  - intros X Y f.
+  - intros A B f.
     apply funextsec.
-    exact (λ x, path_dirprodf_path (eqtohomot (IHP1 X Y f)) (eqtohomot (IHP2 X Y f)) x).
-  - exact (λ A B f g h p q, idpath _).
-  - exact (λ A B f g h p q, idpath _).
-  - intros A B f g h p q.
+    exact (λ x, path_dirprodf_path (eqtohomot (IHP1 A B f)) (eqtohomot (IHP2 A B f)) x).
+  - exact (λ A B f g h θ γ, idpath _).
+  - exact (λ A B f g h θ γ, idpath _).
+  - intros A B f g h θ γ.
     apply funextsec.
     intro x.
     induction x as [x | x].
-    + exact ((maponpaths (maponpaths inl) (eqtohomot (IHP1 _ _ _ _ _ p q) x))
+    + exact ((maponpaths (maponpaths inl) (eqtohomot (IHP1 _ _ _ _ _ θ γ) x))
                @ maponpathscomp0 inl _ _).
-    + exact ((maponpaths (maponpaths inr) (eqtohomot (IHP2 _ _ _ _ _ p q) x))
+    + exact ((maponpaths (maponpaths inr) (eqtohomot (IHP2 _ _ _ _ _ θ γ) x))
                @ maponpathscomp0 inr _ _).
-  - intros A B f g h p q.
+  - intros A B f g h θ γ.
     apply funextsec.
     intro x.
     refine (_ @ !(dirprodf_path_concat _ _ _ _ _)).
     apply path_dirprodf_path.
-    + exact (eqtohomot (IHP1 _ _ _ _ _ p q)).
-    + exact (eqtohomot (IHP2 _ _ _ _ _ p q)).
-  - exact (λ A B C f g h p, idpath _).
-  - intros A B C f g h p.
+    + exact (eqtohomot (IHP1 _ _ _ _ _ θ γ)).
+    + exact (eqtohomot (IHP2 _ _ _ _ _ θ γ)).
+  - exact (λ A B C f g h θ, idpath _).
+  - intros A B C f g h θ.
     apply funextsec.
     exact (λ x, !pathscomp0rid _).
-  - intros A B C f g h p.
+  - intros A B C f g h θ.
     apply funextsec.
     intro x.
     induction x as [x | x].
     +  exact (!maponpathscomp0 inl _ _
-              @ maponpaths (maponpaths inl) (eqtohomot (IHP1 _ _ _ f _ _ p) x)
+              @ maponpaths (maponpaths inl) (eqtohomot (IHP1 _ _ _ f _ _ θ) x)
               @ maponpathscomp0 inl _ _).
     + exact (!maponpathscomp0 inr _ _
-              @ maponpaths (maponpaths inr) (eqtohomot (IHP2 _ _ _ f _ _ p) x)
+              @ maponpaths (maponpaths inr) (eqtohomot (IHP2 _ _ _ f _ _ θ) x)
               @ maponpathscomp0 inr _ _).
-  - intros A B C f g h p.
+  - intros A B C f g h θ.
     apply funextsec.
     intro x.
     refine (dirprodf_path_concat _ _ _ _ x @ _).
     refine (path_dirprodf_path
-              (eqtohomot (IHP1 _ _ _ f _ _ p))
-              (eqtohomot (IHP2 _ _ _ f _ _ p)) x @ _).
+              (eqtohomot (IHP1 _ _ _ f _ _ θ))
+              (eqtohomot (IHP2 _ _ _ f _ _ θ)) x @ _).
     exact (!dirprodf_path_concat _ _ _ _ x).
-  - exact (λ A B C f g h p, idpath _).
-  - intros A B C f g h p.
+  - exact (λ A B C f g h θ, idpath _).
+  - intros A B C f g h θ.
     apply funextsec.
     exact (λ x, !pathscomp0rid _).
-  - intros A B C f g h p.
+  - intros A B C f g h θ.
     apply funextsec.
     intro x.
     induction x as [x | x].
     + refine (!maponpathscomp0 inl _ _ @ _).
       refine (_ @ maponpaths (λ p, p @ _) (!(coprodf_path_maponpaths_inl _ _ _))).
-      exact (maponpaths (maponpaths inl) (eqtohomot (IHP1 A B C f g h p) x)
+      exact (maponpaths (maponpaths inl) (eqtohomot (IHP1 A B C f g h θ) x)
                         @ maponpathscomp0 inl _ _).
     + refine (!maponpathscomp0 inr _ _ @ _).
       refine (_ @ maponpaths (λ p, p @ _) (!(coprodf_path_maponpaths_inr _ _ _))).
-      exact (maponpaths (maponpaths inr) (eqtohomot (IHP2 A B C f g h p) x)
+      exact (maponpaths (maponpaths inr) (eqtohomot (IHP2 A B C f g h θ) x)
                         @ maponpathscomp0 inr _ _).
-  - intros A B C f g h p.
+  - intros A B C f g h θ.
     apply funextsec.
     intro x.
     refine (dirprodf_path_concat _ _ _ _ x @ _).
     refine (path_dirprodf_path
-              (eqtohomot (IHP1 A B C f g h p))
-              (eqtohomot (IHP2 A B C f g h p))
+              (eqtohomot (IHP1 A B C f g h θ))
+              (eqtohomot (IHP2 A B C f g h θ))
               x @ !_).
     refine (maponpaths (λ z, z @ _) (!_) @ _).
     + exact (maponpaths_dirprodf_path _ _ _ _ x).
@@ -344,7 +342,7 @@ Proof.
     apply funextsec.
     intro x.
     induction x as [x | x].
-    +  exact (maponpaths (maponpaths inl) (eqtohomot (IHP1 A B f) x)
+    + exact (maponpaths (maponpaths inl) (eqtohomot (IHP1 A B f) x)
                @ maponpathscomp0 inl _ _
                @ maponpaths (λ p, p @ _) (maponpathscomp0 inl _ _)
                @ maponpaths (λ p, (p @ _) @ _) (!coprodf_path_maponpaths_inl _ _ _)).
@@ -421,34 +419,8 @@ Proof.
   - exact (poly_type_data P).
   - exact (poly_type_laws P).
   - split.
-    + exact (λ X, type_prebicat_invertible_2cell).
-    + exact (λ X Y Z f g, type_prebicat_invertible_2cell).
+    + exact (λ A, type_prebicat_invertible_2cell).
+    + exact (λ A B C f g, type_prebicat_invertible_2cell).
 Defined.
 
 Notation "⦃ P ⦄" := (poly_type P).
-
-Definition poly_id
-           (P : poly_code)
-           (X : UU)
-  : (λ x : act P X, x) ~ (actmap P (λ x : X, x)).
-Proof.
-  induction P as [A | | | ].
-  - exact (λ x, idpath x).
-  - exact (λ x, idpath x).
-  - exact (λ x, !coprodf_id x @ coprodf_path IHP1 IHP2 x).
-  - exact (λ x, !dirprodf_id x @ dirprodf_path IHP1 IHP2 x).
-Defined.
-
-Definition poly_homot
-           (P : poly_code)
-           {X Y : UU}
-           {f g : X → Y}
-           (p : f ~ g)
-  : actmap P f ~ actmap P g.
-Proof.
-  induction P as [A | | |].
-  - exact (λ x, idpath x).
-  - exact p.
-  - exact (coprodf_path IHP1 IHP2).
-  - exact (dirprodf_path IHP1 IHP2).
-Defined.

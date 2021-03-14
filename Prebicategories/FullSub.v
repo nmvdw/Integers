@@ -1,44 +1,26 @@
-(** Fullsubprebicategories of a **)
-(* Copied from UniMath/Bicategories/DisplayedBicats/Examples/FullSub.v *)
+(** 
+ - Discrete displayed prebicategories
+ - Full subprebicategories
+We use the fact that can construct full subpreBIcategories from full subpreCATegories of prebicategories by adding `unit` as 2-cells.
+From 'UniMath/Bicategories/DisplayedBicats/Examples/DisplayedCatToBicat.v' and 'FullSub.v' *)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
-(*Require Import UniMath.CategoryTheory.Core.Functors.*)
 
 Require Import UniMath.CategoryTheory.DisplayedCats.Core.
 Require Import UniMath.CategoryTheory.DisplayedCats.Constructions.
 Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
-Require Import UniMath.Bicategories.Core.Examples.OneTypes.
 Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
-(*Require Import Integers.Prebicategories.TypePrebicat.*)
 Require Import Integers.Prebicategories.DispPrebicat. Import DispPrebicat.Notations.
-(*Require Import Integers.Prebicategories.Invertible_2cells.
-Require Import Integers.Prebicategories.PseudoFunctor.*)
-(*Import PseudoFunctor.Notations.*)
 
 Local Open Scope cat.
 Local Open Scope mor_disp_scope.
 Local Open Scope bicategory_scope.
 
-(* From  UniMath/Bicategories/DisplayedBicats/Examples/DisplayedCatToBicat.v *)
-Definition is_chaotic
-           {C : prebicat}
-           (D : disp_prebicat C)
-  : UU
-  := ∏ (a b : C) (f g : a --> b) (α : f ==> g)
-       (aa : D a) (bb : D b) (ff : aa -->[ f ] bb) (gg : aa -->[ g ] bb),
-     iscontr (ff ==>[ α ] gg).
-
-Definition isaprop_is_chaotic
-           {C : prebicat}
-           (D : disp_prebicat C)
-  : isaprop (is_chaotic D).
-Proof.
-  repeat (apply impred ; intro).
-  exact (isapropiscontr _).
-Qed.
-
+(** Discrete displayed prebicategories **)
+(* Given a displayed preCATegory, construct a displayed preBIcategory by using unit as 2-cells *)
+(* From 'UniMath/Bicategories/DisplayedBicats/Examples/DisplayedCatToBicat.v' *)
 Section Disp_Prebicat_Cells_Unit.
   Context {C : prebicat} (D : disp_cat_data C).
 
@@ -65,7 +47,9 @@ Section Disp_Prebicat_Cells_Unit.
     := _ ,, disp_prebicat_cells_unit_laws.
 End Disp_Prebicat_Cells_Unit.
 
-(* From  UniMath/Bicategories/DisplayedBicats/Examples/FullSub.v *)
+(** Full subprebicategories **)
+(* Construct the full subpreBIcategory from the full subCATegory *)
+(* From 'UniMath/Bicategories/DisplayedBicats/Examples/FullSub.v' *)
 Section FullSubPrebicat.
   Variable (C : prebicat)
            (P : C → UU).

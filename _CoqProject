@@ -24,6 +24,7 @@ Prebicategories/AddEndpoints.v
 Prebicategories/DispDepProd.v
 Prebicategories/FullSub.v
 
+signature.v
 TypeHomot/type_homot.v
 TypeHomot/polynomials.v
 TypeHomot/endpoints.v
@@ -49,5 +50,5 @@ WildCategories/Initial.v
 WildCategories/Adjunction.v
 WildCategories/AdjunctionsPreserveInitial.v
 
-Zb_Zh_sig.v
-Zb_Zh_sig_simple.v
+#Zb_Zh_sig.v
+#Zb_Zh_sig_simple.v

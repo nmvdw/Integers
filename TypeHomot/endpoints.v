@@ -5,9 +5,9 @@ Require Import UniMath.CategoryTheory.DisplayedCats.Core.
 Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
 Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 Require Import UniMath.Bicategories.DisplayedBicats.Examples.DisplayedCatToBicat.
-Require Import UniMath.Bicategories.Core.Examples.OneTypes.
+(*Require Import UniMath.Bicategories.Core.Examples.OneTypes.*)
 
-Require Import sem.signature.hit_signature.
+(*Require Import sem.signature.hit_signature.*)
 Require Import sem.prelude.basics.
 
 Require Import Integers.Prebicategories.DispPrebicat.
@@ -17,19 +17,24 @@ Require Import Integers.Prebicategories.Composition.
 Require Import Integers.Prebicategories.Projection.
 Require Import Integers.Prebicategories.Algebra.
 Require Import Integers.TypeHomot.type_homot.
+Require Import Integers.signature.
 Require Import Integers.TypeHomot.polynomials.
+
 
 Local Open Scope cat.
 Local Open Scope bicategory_scope.
 Local Open Scope mor_disp_scope.
+
+Opaque comp_pseudofunctor.
 
 Definition endpoint_type_ob
            {A P Q : poly_code}
            (e : endpoint A P Q)
            {X : UU}
            (c : act A X → X)
-  : act P X → act Q X.
-Proof.
+  : act P X → act Q X
+  := sem_endpoint_UU e c.
+(*Proof.
   induction e as [ | | | | | | | P T t | | ].
   - exact (λ x, x).
   - exact (λ x, IHe2 (IHe1 x)).
@@ -41,7 +46,7 @@ Proof.
   - exact (λ x, t).
   - exact f.
   - exact c.
-Defined.
+Defined.*)
   
 Definition endpoint_type_mor
            {A P Q : poly_code}
@@ -50,7 +55,7 @@ Definition endpoint_type_mor
            {cX : act A X → X}
            {cY : act A Y → Y}
            {f : X → Y}
-           (ef : ((λ x, f (cX x)) ~ (λ x, cY (poly_map A f x))))
+           (ef : ((λ x, f (cX x)) ~ (λ x, cY (actmap A f x))))
            (x : act P X)
   : actmap Q f (endpoint_type_ob e cX x)
     =
@@ -90,8 +95,8 @@ Definition endpoint_type_natural
            {A P Q : poly_code}
            (e : endpoint A P Q)
            {X Y : UU}
-           {cX : poly_act A X → X}
-           {cY : poly_act A Y → Y}
+           {cX : act A X → X}
+           {cY : act A Y → Y}
            {f g : X → Y}
            {ef : ((λ x, f (cX x)) ~ (λ x, cY (actmap A f x)))}
            {eg : ((λ x, g (cX x)) ~ (λ x, cY (actmap A g x)))}
@@ -268,7 +273,7 @@ Proof.
                    x)
             =
             (maponpaths
-               (poly_map R (pr1 g))
+               (actmap R (pr1 g))
                (endpoint_type_mor
                   e2 (pr12 f)
                   (endpoint_type_ob e1 (pr2 X) x)
