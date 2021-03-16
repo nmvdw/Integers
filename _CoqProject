@@ -50,5 +50,4 @@ WildCategories/Initial.v
 WildCategories/Adjunction.v
 WildCategories/AdjunctionsPreserveInitial.v
 
-#Zb_Zh_sig.v
-#Zb_Zh_sig_simple.v
+Zb_Zh_sig.v
