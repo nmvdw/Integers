@@ -1,37 +1,27 @@
-(** We define a signature for Zb and for Zh **)
+(*
+ - Signature for Zb
+ - Signature for Zh
+*)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 
-(*Require Import UniMath.CategoryTheory.Core.Categories.
-Require Import UniMath.Bicategories.Core.Bicat.*)
-Require Import UniMath.Bicategories.Core.Examples.OneTypes.
-
-Require Import sem.prelude.all.
-Require Import sem.signature.hit_signature.
-Require Import sem.signature.hit.
-
-(*Require Import sem.algebra.one_types_polynomials.
-Require Import sem.algebra.one_types_endpoints.
-Require Import sem.algebra.one_types_homotopies.
-Require Import sem.displayed_algebras.displayed_algebra.
-Require Import sem.displayed_algebras.globe_over_lem.
- *)
-Require Import  Integers.TypeHomot.homotopies.
+Require Import Integers.signature.
+Require Import Integers.TypeHomot.homotopies.
 
 (** Zb **)
 Definition Zb_point_constr : poly_code
-  := (C unit_one_type + I) + (I + I).
+  := (C unit + Id) + (Id + Id).
 
 Definition succb
-  : endpoint Zb_point_constr I I
+  : endpoint Zb_point_constr Id Id
   := comp (comp (ι₂ _ _) (ι₁ _ _)) constr.
 
 Definition pred₁
-  : endpoint Zb_point_constr I I
+  : endpoint Zb_point_constr Id Id
   := comp (comp (ι₁ _ _) (ι₂ _ _)) constr.
 
 Definition pred₂
-  : endpoint Zb_point_constr I I
+  : endpoint Zb_point_constr Id Id
   := comp (comp (ι₂ _ _) (ι₂ _ _)) constr.
 
 Inductive Zb_paths : UU :=
@@ -46,8 +36,8 @@ Proof.
   - exact Zb_point_constr.
   - exact Zb_paths.
   - intro j; induction j.
-    + exact I.
-    + exact I.
+    + exact Id.
+    + exact Id.
   - intro j; induction j.
     + exact (comp succb pred₁).
     + exact (comp pred₂ succb).
@@ -65,48 +55,49 @@ Proof.
   - intro j; induction j.
 Defined.
 
-Check (hit_algebra_type Zb_signature).
+(* Now `hit_algebra_type Zh_signature` is the Zh-algebra prebicategory. *)
+
 
 (** Zh  **)
 
 Definition Zh_point_constr : poly_code
-  := C unit_one_type + (I + I).
+  := C unit + (Id + Id).
 
 Inductive Zh_paths : UU :=
 | sech : Zh_paths
 | reth : Zh_paths.
 
-Definition Zh_paths_args (j : Zh_paths) : poly_code := I.
+Definition Zh_paths_args (j : Zh_paths) : poly_code := Id.
 
 Definition succ
-  : endpoint Zh_point_constr I I
+  : endpoint Zh_point_constr Id Id
   := comp (comp (ι₁ _ _) (ι₂ _ _)) constr.
 
 Definition pred
-  : endpoint Zh_point_constr I I
+  : endpoint Zh_point_constr Id Id
   := comp (comp (ι₂ _ _) (ι₂ _ _)) constr.
 
-Definition Zh_paths_lhs (j : Zh_paths) : endpoint Zh_point_constr (Zh_paths_args j) I.
+Definition Zh_paths_lhs (j : Zh_paths) : endpoint Zh_point_constr (Zh_paths_args j) Id.
 Proof.
   induction j.
   - exact (comp succ pred).
   - exact (comp pred succ).
 Defined.
 
-Definition Zh_paths_rhs (j : Zh_paths) : endpoint Zh_point_constr (Zh_paths_args j) I
+Definition Zh_paths_rhs (j : Zh_paths) : endpoint Zh_point_constr (Zh_paths_args j) Id
   := id_e _ _.
   
 Inductive Zh_homots : UU :=
 | coh : Zh_homots.
 
-Definition Zh_homots_point_arg (j : Zh_homots) : poly_code := I.
+Definition Zh_homots_point_arg (j : Zh_homots) : poly_code := Id.
 
 Definition Zh_homots_point_left_endpoint (j : Zh_homots)
-  : endpoint Zh_point_constr (Zh_homots_point_arg j) I
+  : endpoint Zh_point_constr (Zh_homots_point_arg j) Id
   := comp (comp succ pred) succ.
 
 Definition Zh_homots_point_right_endpoint (j : Zh_homots)
-           : endpoint Zh_point_constr (Zh_homots_point_arg j) I
+           : endpoint Zh_point_constr (Zh_homots_point_arg j) Id
   := succ.
 
 Definition Zh_homots_point_lhs
@@ -114,8 +105,8 @@ Definition Zh_homots_point_lhs
   : homot_endpoint
       Zh_paths_lhs
       Zh_paths_rhs
-      (c (Zh_homots_point_arg i) (tt : unit_one_type))
-      (c (Zh_homots_point_arg i) (tt : unit_one_type))
+      (c (Zh_homots_point_arg i) tt)
+      (c (Zh_homots_point_arg i) tt)
       (Zh_homots_point_left_endpoint i)
       (Zh_homots_point_right_endpoint i)
   := trans_e
@@ -133,8 +124,8 @@ Definition Zh_homots_point_rhs
   : homot_endpoint
       Zh_paths_lhs
       Zh_paths_rhs
-      (c (Zh_homots_point_arg j) (tt : unit_one_type))
-      (c (Zh_homots_point_arg j) (tt : unit_one_type))
+      (c (Zh_homots_point_arg j) tt)
+      (c (Zh_homots_point_arg j) tt)
       (Zh_homots_point_left_endpoint j)
       (Zh_homots_point_right_endpoint j)
   := trans_e
@@ -143,8 +134,6 @@ Definition Zh_homots_point_rhs
           (path_constr reth succ))
        (comp_id_r _).
 
-
-  
 Definition Zh_signature : hit_signature.
 Proof.
   repeat simple refine (_ ,, _).
@@ -155,13 +144,13 @@ Proof.
   - exact Zh_paths_rhs.
   - exact Zh_homots.
   - exact Zh_homots_point_arg.
-  - exact (λ _, C unit_one_type).
-  - exact (λ _, @c _ _ unit_one_type tt).
-  - exact (λ _, @c _ _ unit_one_type tt).
+  - exact (λ _, C unit).
+  - exact (λ _, c Id tt).
+  - exact (λ _, c Id tt).
   - exact Zh_homots_point_left_endpoint.
   - exact Zh_homots_point_right_endpoint.
   - exact Zh_homots_point_lhs.
   - exact Zh_homots_point_rhs.
 Defined.
 
-Check (hit_algebra_type Zh_signature).
+(* Now `hit_algebra_type Zh_signature` is the Zh-algebra prebicategory. *)
