@@ -28,9 +28,9 @@ Require Import Integers.Prebicategories.DispDepProd.
 Require Import Integers.Prebicategories.AddEndpoints.
 Require Import Integers.Prebicategories.FullSub.
 Require Import Integers.signature.
-Require Import Integers.TypeHomot.type_homot.
-Require Import Integers.TypeHomot.polynomials.
-Require Import Integers.TypeHomot.endpoints.
+Require Import Integers.type_prebicat.
+Require Import Integers.Algebra.polynomials.
+Require Import Integers.Algebra.endpoints.
 
 Local Open Scope cat.
 Local Open Scope bicategory_scope.

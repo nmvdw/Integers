@@ -12,7 +12,7 @@ Require Import Integers.signature.
 
 Require Import Integers.Prebicategories.DispPrebicat.
 Require Import Integers.Prebicategories.PseudoFunctor.
-Require Import Integers.TypeHomot.type_homot.
+Require Import Integers.type_prebicat.
 
 Local Open Scope cat.
 Local Open Scope bicategory_scope.

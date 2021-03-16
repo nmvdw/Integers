@@ -25,10 +25,10 @@ Prebicategories/DispDepProd.v
 Prebicategories/FullSub.v
 
 signature.v
-TypeHomot/type_homot.v
-TypeHomot/polynomials.v
-TypeHomot/endpoints.v
-TypeHomot/homotopies.v
+type_prebicat.v
+Algebra/polynomials.v
+Algebra/endpoints.v
+Algebra/homotopies.v
 
 WildCategories/WildCat.v
 WildCategories/DispWildCat.v

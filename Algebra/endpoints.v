@@ -18,9 +18,8 @@ Require Import Integers.Prebicategories.Composition.
 Require Import Integers.Prebicategories.Projection.
 Require Import Integers.Prebicategories.Algebra.
 Require Import Integers.signature.
-Require Import Integers.TypeHomot.type_homot.
-Require Import Integers.TypeHomot.polynomials.
-
+Require Import Integers.type_prebicat.
+Require Import Integers.Algebra.polynomials.
 
 Local Open Scope cat.
 Local Open Scope bicategory_scope.

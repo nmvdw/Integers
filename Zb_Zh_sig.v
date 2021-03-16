@@ -1,14 +1,14 @@
 (*
- - Signature for Zb
- - Signature for Zh
+ - Signature for ℤb
+ - Signature for ℤh
 *)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 
 Require Import Integers.signature.
-Require Import Integers.TypeHomot.homotopies.
+Require Import Integers.Algebra.homotopies.
 
-(** Zb **)
+(** Signature for ℤb **)
 Definition Zb_point_constr : poly_code
   := (C unit + Id) + (Id + Id).
 
@@ -55,11 +55,10 @@ Proof.
   - intro j; induction j.
 Defined.
 
-(* Now `hit_algebra_type Zh_signature` is the Zh-algebra prebicategory. *)
+(* Now `hit_algebra_type Zb_signature` is the ℤb-algebra prebicategory. *)
 
 
-(** Zh  **)
-
+(** Signature for ℤh  **)
 Definition Zh_point_constr : poly_code
   := C unit + (Id + Id).
 
@@ -153,4 +152,4 @@ Proof.
   - exact Zh_homots_point_rhs.
 Defined.
 
-(* Now `hit_algebra_type Zh_signature` is the Zh-algebra prebicategory. *)
+(* Now `hit_algebra_type Zh_signature` is the ℤh-algebra prebicategory. *)
