@@ -1,5 +1,7 @@
-(** Displayed Wild categories **)
-(** From UniMath/Bicategories/DisplayedBicats/DispBicat.v **)
+(*
+ - Displayed Wild categories
+From 'UniMath/Bicategories/DisplayedBicats/DispBicat.v'
+*)
 
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
@@ -15,12 +17,10 @@ Local Open Scope cat.
 Local Open Scope mor_disp_scope.
 
 (* Transport of displayed cells *)
-
 Notation disp_wild_cat_1_id_comp_cells := disp_prebicat_1_id_comp_cells.
 
 
 (* Operations *)
-
 Section disp_wild_cat.
   Context {C : wild_cat}.
   

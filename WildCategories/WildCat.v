@@ -1,13 +1,17 @@
-(** Definitions of wild categories **)
+(*
+ - Definition of wild categories
+ - Some lemmas for invertible 2-cells
+*)
 
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.Bicategories.Core.Bicat. Import Notations.
 
-
 Local Open Scope cat.
 
+(** Definition of wild category **)
+(* They are just the data for prebicategories *)
 Notation wild_cat_2cell_struct := prebicat_2cell_struct.
 Notation wild_cat_1_id_comp_cells := prebicat_1_id_comp_cells.
 Notation wild_cat_cells := prebicat_cells.
@@ -16,6 +20,7 @@ Notation wild_cat := prebicat_data.
 Notation make_wild_cat := make_prebicat_data.
 Notation build_wild_cat := build_prebicat_data.
 
+(** Lemmas for invertible 2-cells **)
 Definition is_invertible_2cell {C : wild_cat}
            {a b : C} {f g : a --> b} (θ : f ==> g)
   : UU := g ==> f.

@@ -1,14 +1,21 @@
-(** Wild Functors between Wild Categories **)
-(* Compiled from different files in UniMath/Bicategories, mainly PseudoFunctors/Display/PseudoFunctorBicat.v and PseudoFunctors/PseudoFunctor.v *)
+(*
+ - Wild functors between wild categories 
+ - Identity wild functor
+ - Composition wild functor
+ - Projection wild functor
+ - Notation
+From 'UniMath/Bicategories/PseudoFunctors/PseudoFunctor.v',
+'UniMath/Bicategories/PseudoFunctors/Display/PseudoFunctorBicat.v',
+'UniMath/Bicategories/PseudoFunctors/Examples/Identity.v',
+'UniMath/Bicategories/PseudoFunctors/Examples/Composition.v',
+'UniMath/Bicategories/PseudoFunctors/Examples/Projection.v'.
+*)
 (* UniMath defines pseudofunctors as instances of the pseudofunctor category, here they are defined directly. *)
-(* This file also contains the identity, composition and projection wild functor, from UniMath/Bicategories/PseudoFunctors/Examples/Identity.v, Composition.v and Projection.v *)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
 Require Import UniMath.CategoryTheory.Core.Functors.
 Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
-Require Import UniMath.Bicategories.Core.Examples.OneTypes.
-Require Import UniMath.Bicategories.DisplayedBicats.DispBicat.
 
 Require Import Integers.WildCategories.WildCat.
 Require Import Integers.WildCategories.DispWildCat.
@@ -18,6 +25,7 @@ Local Open Scope cat.
 Local Open Scope mor_disp_scope.
 Local Open Scope bicategory_scope.
 
+(** Definition of wild functor **)
 Definition wild_functor (C D : wild_cat) : UU.
 Proof.
   use total2.
@@ -32,7 +40,7 @@ Proof.
                 invertible_2cell (F₁ a b f · F₁ b c g) (F₁ a c (f · g)))).
 Defined.
 
-(* Data projections *)
+(** Data projections **)
 Definition wild_functor_objects {C D : wild_cat} (F : wild_functor C D) : C → D
   := pr1 F.
 
@@ -79,7 +87,7 @@ Proof.
   exact (F ,, F₁ ,, F₂ ,, Fi ,, Fc).
 Defined.
 
-(* Isos are preserved *)
+(** Isos are preserved **)
 Definition wild_functor_is_iso
            {C D : wild_cat}
            (F : wild_functor C D)
@@ -89,8 +97,7 @@ Definition wild_functor_is_iso
   : is_invertible_2cell (##F θ)
   := ##F (θ^-1).
 
-(* Examples *)
-
+(** Identity wild functor **)
 Definition id_wild_functor (C : wild_cat) : wild_functor C C.
 Proof.
   use make_wild_functor.
@@ -101,6 +108,7 @@ Proof.
   - exact (λ a b c f g, id₂ (f · g) ,, id₂ (f · g)).
 Defined.
 
+(** Composition wild functor **)
 Definition comp_wild_functor
            {C D E : wild_cat}
            (F : wild_functor C D)
@@ -125,6 +133,7 @@ Proof.
       * exact (wild_functor_is_iso G (wild_functor_comp F f g)).
 Defined.
 
+(** Projection wild functor **)
 Definition pr1_wild_functor {C : wild_cat} (D : disp_wild_cat C)
   : wild_functor (total_wild_cat D) C.
 Proof.
@@ -136,8 +145,10 @@ Proof.
   - exact (λ a b c f g, id2 (pr1 f · pr1 g) ,, id2 (pr1 f · pr1 g)).
 Defined.
 
+(** Notations **)
+(* ✦ (\st41) for composition because · is already defined on functions *)
 Module Notations.
   Notation "'#'" := wild_functor_morphisms.
   Notation "'##'" := wild_functor_cells.
-  Notation "F ⋯ G" := (comp_wild_functor F G) (at level 40). 
+  Notation "F ✦ G" := (comp_wild_functor F G) (at level 40). 
 End Notations.

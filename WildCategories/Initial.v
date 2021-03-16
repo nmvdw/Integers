@@ -1,15 +1,16 @@
-(** Inital objects in wild categories **)
+(** 
+ - Inital objects in wild categories
+**)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
-Require Import UniMath.CategoryTheory.Core.Functors.
 Require Import UniMath.Bicategories.Core.Bicat. Import Bicat.Notations.
-Require Import UniMath.Bicategories.Core.Examples.OneTypes.
 
 Require Import Integers.WildCategories.WildCat.
 
 Local Open Scope cat.
 
+(** Initial objects **)
 Section Initial.
   Context {C : wild_cat}
           (i : C).

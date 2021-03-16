@@ -1,5 +1,7 @@
-(** Direct product of two displayed wild categories over a wild category **)
-(* Copied from UniMath/Bicategories/DisplayedBicats/Examples/Prod.v *)
+(*
+ - Direct product of two displayed wild categories over a wild category
+From 'UniMath/Bicategories/DisplayedBicats/Examples/Prod.v'
+*)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
@@ -16,6 +18,7 @@ Local Open Scope cat.
 Local Open Scope mor_disp_scope.
 Local Open Scope bicategory_scope.
 
+(** Direct product of displayed wild categories **)
 Section disp_wild_cat_prod.
   Context {C : wild_cat}.
   Variable (D1 D2 : disp_wild_cat C).

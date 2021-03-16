@@ -39,13 +39,6 @@ WildCategories/Invertible_2cells.v
 WildCategories/WildFunctor.v
 WildCategories/WildNaturalTransformation.v
 
-WildCategories/Add2CellUnit.v
-WildCategories/Add2Cell.v
-WildCategories/Algebra.v
-WildCategories/DispDepProd.v
-WildCategories/FullSub.v
-
-
 WildCategories/Initial.v
 WildCategories/Adjunction.v
 WildCategories/AdjunctionsPreserveInitial.v

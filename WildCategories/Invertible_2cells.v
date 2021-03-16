@@ -1,16 +1,19 @@
-(** Invertible 2-cells **)
-(* From UniMath.Bicategories.Core.Invertible_2cells.v *)
+(*
+ - More lemmas concerning invertible 2-cells
+ - Invertibility tactic
+From 'UniMath.Bicategories.Core.Invertible_2cells.v'
+*)
 
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
-Require Import UniMath.CategoryTheory.Core.Functors.
 Require Import UniMath.Bicategories.Core.Bicat. Import Notations.
 
 Require Import Integers.WildCategories.WildCat.
 
 Local Open Scope cat.
 
+(** Invertible 2-cell lemmas **)
 Lemma is_invertible_2cell_lunitor {C : wild_cat} {a b : C} (f : a --> b)
   : is_invertible_2cell (lunitor f).
 Proof.
@@ -65,14 +68,12 @@ Proof.
   exact (f ◃ inv_x^-1).
 Defined.
 
-
 Lemma is_invertible_2cell_rwhisker {C : wild_cat} {a b c : C} {f1 f2 : a --> b} (g : b --> c)
       {x : f1 ==> f2} (inv_x : is_invertible_2cell x)
   : is_invertible_2cell (x ▹ g).
 Proof.
   exact (inv_x^-1 ▹ g).
 Defined.
-
 
 Definition is_invertible_2cell_hcomp
        {C : wild_cat}
@@ -86,7 +87,7 @@ Proof.
   exact (inv_η₁^-1 ⋆⋆ inv_η₂^-1).
 Defined.
 
-(* .. *)
+(** Invertibility tactic **)
 
 Ltac is_iso :=
   match goal with
@@ -106,6 +107,8 @@ Ltac is_iso :=
   | _ => try assumption
   end.
 
+(** Lemmas using the tactic **)
+
 Definition inv_of_invertible_2cell
            {C : wild_cat}
            {X Y : C}
@@ -117,7 +120,6 @@ Proof.
   - exact (θ^-1).
   - is_iso. 
 Defined.
-
 
 Definition comp_of_invertible_2cell
            {C : wild_cat}
