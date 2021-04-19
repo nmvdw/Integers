@@ -204,6 +204,7 @@ Section HITPathAlgebraMorProjections.
     exact p. (* This is quick, no more subgoals *)
   Qed. (* Qed is slow *)
    *)
+  Axiom AA : preserves_path (pr1 f) path_alg_map_commute.
 End HITPathAlgebraMorProjections.
 
 Definition make_hit_path_alg_map
