@@ -5,9 +5,8 @@
  - Prebicategory of path algebras (PathAlg)
  - Projections and builders for PathAlg
  - Prebicategory of HIT algebras (Alg)
- - Projections and builders for Alg*
+ - Projections and builders for Alg
 From 'GrpdHITs/code/algebra/one_types_homotopies.v'
- *: not complete Qed is too slow on one of the projections
 *)
 Require Import UniMath.MoreFoundations.All.
 Require Import UniMath.CategoryTheory.Core.Categories.
@@ -27,6 +26,7 @@ Require Import Integers.Prebicategories.Algebra.
 Require Import Integers.Prebicategories.DispDepProd.
 Require Import Integers.Prebicategories.AddEndpoints.
 Require Import Integers.Prebicategories.FullSub.
+Require Import Integers.Prebicategories.Identity.
 Require Import Integers.signature.
 Require Import Integers.type_prebicat.
 Require Import Integers.Algebra.polynomials.
@@ -111,7 +111,6 @@ Definition make_hit_prealgebra_mor
   := f,, Hf,, type_prebicat_invertible_2cell.
 
 (** Prebicategory of path algebras (PathAlg) **)
-(* Takes long to check (about 2.5 min in my case) *)
 Definition hit_path_algebra_disp_type
            (Σ : hit_signature)
   : disp_prebicat (hit_prealgebra_type Σ)
@@ -120,6 +119,7 @@ Definition hit_path_algebra_disp_type
        (λ j, add_path_endpoints_prebicat
                (disp_alg_prebicat ⦃ point_constr Σ ⦄)
                ⦃ path_source Σ j ⦄
+               ⦃ Id ⦄
                (endpoint_type (path_left Σ j))
                (endpoint_type (path_right Σ j))).
 
@@ -190,21 +190,10 @@ Section HITPathAlgebraMorProjections.
       path_alg_constr Y (actmap (point_constr Σ) path_alg_map_carrier x)
     := prealg_map_commute (pr1 f).
 
-  (*
+  
   Definition path_alg_map_path
-    : preserves_path (pr1 f) path_alg_map_commute.
-  Proof.
-    intros j x.
-    unfold prealg_map_carrier, path_alg_map_commute.
-    unfold prealg_map_commute, path_alg_path.
-    pose (eqtohomot (pr2 f j) x) as p.
-    cbn in p.
-    unfold homotcomp, homotfun, funhomotsec in p.
-    (* goal is nu exactly equal to p *)
-    exact p. (* This is quick, no more subgoals *)
-  Qed. (* Qed is slow *)
-   *)
-  Axiom AA : preserves_path (pr1 f) path_alg_map_commute.
+    : preserves_path (pr1 f) path_alg_map_commute
+    := λ j x, eqtohomot (pr2 f j) x.
 End HITPathAlgebraMorProjections.
 
 Definition make_hit_path_alg_map
@@ -281,10 +270,9 @@ Section HITAlgebraMapProjections.
     : preserves_point alg_map_carrier
     := path_alg_map_commute (pr1 f).
 
-  (* needs path_alg_map_path
   Definition alg_map_path
     : preserves_path _ alg_map_commute
-    := path_alg_map_path (pr1 f).*)
+    := path_alg_map_path (pr1 f).
 End HITAlgebraMapProjections.
 
 Definition make_algebra_map
