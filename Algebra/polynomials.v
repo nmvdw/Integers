@@ -248,11 +248,11 @@ Definition poly_type_data (P : poly_code)
   : pseudofunctor_data type_prebicat type_prebicat.
 Proof.
   use make_pseudofunctor_data.
-  - exact (act P).
+  - exact (λ X, act P X).
   - exact (λ A B f, actmap P f).
-  - exact (λ A B f g, poly_homot P).
-  - exact (poly_id P).
-  - exact (λ A B C, poly_comp P).
+  - exact (λ A B f g θ, poly_homot P θ).
+  - exact (λ X, poly_id P X).
+  - exact (λ A B C f g, poly_comp P f g).
 Defined.
 
 Definition poly_type_laws (P : poly_code)

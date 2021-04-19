@@ -16,6 +16,7 @@ Prebicategories/Invertible_2cells.v
 Prebicategories/Unitors.v
 Prebicategories/PseudoFunctor.v
 Prebicategories/PseudoTransformation.v
+Prebicategories/Identity.v
 Prebicategories/Composition.v
 Prebicategories/Projection.v
 
