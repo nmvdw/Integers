@@ -1,6 +1,7 @@
 (*
  - Definition of wild categories
- - Some lemmas for invertible 2-cells
+ - Lemmas for invertible 2-cells
+ - Equivalence of object
 *)
 
 Require Import UniMath.Foundations.All.
@@ -70,3 +71,8 @@ Coercion property_from_invertible_2cell {C : wild_cat}
 Definition id2_invertible_2cell {C : prebicat} {a b : C} (f : a --> b)
   : invertible_2cell f f
   := make_invertible_2cell (is_invertible_2cell_id₂ f).
+
+(** Equivalence of objects **)
+Definition are_equivalent {C : wild_cat} (a b : C)
+  : UU
+  := ∑ (f : a --> b) (g : b --> a), f · g ==> identity a × g · f ==> identity b.

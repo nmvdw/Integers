@@ -39,9 +39,10 @@ WildCategories/Invertible_2cells.v
 
 WildCategories/WildFunctor.v
 WildCategories/WildNaturalTransformation.v
+WildCategories/WildNaturalIsomorphism.v
 
+WildCategories/AdjointEquivalence.v
 WildCategories/Initial.v
-WildCategories/Adjunction.v
-WildCategories/AdjunctionsPreserveInitial.v
+WildCategories/AdjointEquivalencesPreserveInitial.v
 
 Zb_Zh_sig.v

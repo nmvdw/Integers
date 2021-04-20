@@ -1,5 +1,6 @@
 (** 
- - Inital objects in wild categories
+ - Initial objects in wild categories
+ - Initial objects are equivalent
 **)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
@@ -55,3 +56,12 @@ Definition build_initial_object
            (hθ : ∏ (c : C) (α β : i --> c), α ==> β)
   : initial_object C
   := i ,, hf ,, hθ.
+
+(** Initial objects are equivalent **)
+Lemma initial_objects_equivalent
+      {C : wild_cat}
+      (i j : initial_object C)
+  : are_equivalent i j.
+Proof.
+  exact (initial_mor i j,, initial_mor j i,, initial_2cell _ _,, initial_2cell _ _).
+Qed.
